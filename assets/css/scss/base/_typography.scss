@@ -1,0 +1,88 @@
+// _typography.scss
+// h1-h6 styles, p tags, lists, etc
+
+body {
+	color: $color-black;	
+	font-family: $font-global;
+	font-size: 16px;
+	line-height: 1.5625; // 25 / 16
+	transition: 0.2s font;
+}
+
+h1,
+.h1 {
+	
+}
+
+h2,
+.h2 {
+
+}
+
+h3,
+.h3 {
+
+}
+
+h4,
+.h4 {
+	
+}
+
+h5,
+.h5 {
+
+}
+
+h6,
+.h6 {
+
+}
+strong {
+	font-weight: 700;
+}
+em {
+	font-style: italic;
+}
+a {
+	&:focus {
+
+	}
+	&:hover,
+	&:active {
+
+	}
+}
+ol {
+	li {
+		
+	}
+}
+ul {
+	li {
+		
+	}
+}
+
+pre,
+font {
+	
+}
+
+p {
+
+}
+
+table {
+
+	td, th {
+
+	}
+	th {
+
+	}
+}
+
+@media (min-width: $break-desktopSmall) {
+
+}

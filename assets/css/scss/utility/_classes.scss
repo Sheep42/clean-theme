@@ -1,0 +1,29 @@
+.container {
+	height: 100%;
+	width: 100%;
+}
+
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: polygon(0px 0px, 0px 0px,0px 0px, 0px 0px);
+	position: absolute !important;
+	white-space: nowrap;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+}
+
+.responsive-img-wrapper {
+	display: inline-block;
+	vertical-align:middle;
+	img {
+		display: block;
+		height: auto;
+		max-width: 100%;
+	}
+}
+
+.hidden,
+[hidden] {
+	display: none!important;
+}
