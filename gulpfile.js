@@ -68,7 +68,7 @@ gulp.task('minify-js', function() {
 
 gulp.task('watch', function () {
     browserSync.init({
-        files: ['{lib,templates}/**/*.php', '*.php'],
+        files: ['template-parts/**/*.php', '*.php'],
         proxy: "clean-theme.local",
         snippetOptions: {
           whitelist: ['/wp-admin/admin-ajax.php'],
