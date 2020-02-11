@@ -1,13 +1,14 @@
 <?php
-/**
- * Clean Theme functions and definitions
- *
- * @link https://developer.wordpress.org/themes/basics/theme-functions/
- *
- * @package WordPress
- * @subpackage Clean Theme
- * @since 1.0
- */
+
+function cleantheme_init() {
+
+}
+add_action( 'init', 'cleantheme_init' );
+
+function cleantheme_admin_init() {
+
+}
+add_action( 'admin_init', 'cleantheme_admin_init' );
 
 function cleantheme_setup() {
 	/*
@@ -33,18 +34,14 @@ function cleantheme_setup() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 
+	// Custom image sizes
 	add_image_size( 'cleantheme-featured-image', 2000, 1200, true );
-
 	add_image_size( 'cleantheme-thumbnail-avatar', 100, 100, true );
 
-	// Set the default content width.
-	$GLOBALS['content_width'] = 525;
-
 	// This theme uses wp_nav_menu() in two locations.
-	register_nav_menus( array(
-		'top'    => __( 'Top Menu', 'cleantheme' ),
-		'social' => __( 'Social Links Menu', 'cleantheme' ),
-	) );
+	// register_nav_menus( array(
+	// 	'top'    => __( 'Top Menu', 'cleantheme' ),
+	// ) );
 
 	/*
 	 * Switch default core markup for search form, comment form, and comments
@@ -58,31 +55,6 @@ function cleantheme_setup() {
 	) );
 
 	/*
-	 * Enable support for Post Formats.
-	 *
-	 * See: https://codex.wordpress.org/Post_Formats
-	 */
-	add_theme_support( 'post-formats', array(
-		'aside',
-		'image',
-		'video',
-		'quote',
-		'link',
-		'gallery',
-		'audio',
-	) );
-
-	// Add theme support for Custom Logo.
-	add_theme_support( 'custom-logo', array(
-		'width'       => 250,
-		'height'      => 250,
-		'flex-width'  => true,
-	) );
-
-	// Add theme support for selective refresh for widgets.
-	add_theme_support( 'customize-selective-refresh-widgets' );
-
-	/*
 	 * This theme styles the visual editor to resemble the theme style,
 	 * specifically font, colors, and column width.
  	 */
@@ -91,43 +63,54 @@ function cleantheme_setup() {
 add_action( 'after_setup_theme', 'cleantheme_setup' );
 
 /**
- * Set the content width in pixels, based on the theme's design and stylesheet.
- *
- * Priority 0 to make it available to lower priority callbacks.
- *
- * @global int $content_width
+ * Example post type registration, replace details below
+ * and call function inside of cleantheme_init
  */
-function cleantheme_content_width() {
-
-	$content_width = $GLOBALS['content_width'];
-
-	// Get layout.
-	$page_layout = get_theme_mod( 'page_layout' );
-
-	// Check if layout is one column.
-	if ( 'one-column' === $page_layout ) {
-		if ( cleantheme_is_frontpage() ) {
-			$content_width = 644;
-		} elseif ( is_page() ) {
-			$content_width = 740;
-		}
-	}
-
-	// Check if is single post and there is no sidebar.
-	if ( is_single() && ! is_active_sidebar( 'sidebar-1' ) ) {
-		$content_width = 740;
-	}
-
-	/**
-	 * Filter Clean Theme content width of the theme.
-	 *
-	 * @since Clean Theme 1.0
-	 *
-	 * @param int $content_width Content width in pixels.
-	 */
-	$GLOBALS['content_width'] = apply_filters( 'cleantheme_content_width', $content_width );
+function cleantheme_register_post_type() {
+	$labels = array(
+        'name'                  => _x( 'Books', 'Post type general name', 'textdomain' ),
+        'singular_name'         => _x( 'Book', 'Post type singular name', 'textdomain' ),
+        'menu_name'             => _x( 'Books', 'Admin Menu text', 'textdomain' ),
+        'name_admin_bar'        => _x( 'Book', 'Add New on Toolbar', 'textdomain' ),
+        'add_new'               => __( 'Add New', 'textdomain' ),
+        'add_new_item'          => __( 'Add New Book', 'textdomain' ),
+        'new_item'              => __( 'New Book', 'textdomain' ),
+        'edit_item'             => __( 'Edit Book', 'textdomain' ),
+        'view_item'             => __( 'View Book', 'textdomain' ),
+        'all_items'             => __( 'All Books', 'textdomain' ),
+        'search_items'          => __( 'Search Books', 'textdomain' ),
+        'parent_item_colon'     => __( 'Parent Books:', 'textdomain' ),
+        'not_found'             => __( 'No books found.', 'textdomain' ),
+        'not_found_in_trash'    => __( 'No books found in Trash.', 'textdomain' ),
+        'featured_image'        => _x( 'Book Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
+        'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+        'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+        'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+        'archives'              => _x( 'Book archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
+        'insert_into_item'      => _x( 'Insert into book', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
+        'uploaded_to_this_item' => _x( 'Uploaded to this book', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
+        'filter_items_list'     => _x( 'Filter books list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
+        'items_list_navigation' => _x( 'Books list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
+        'items_list'            => _x( 'Books list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+    );
+ 
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'book' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
+    );
+ 
+    register_post_type( 'book', $args );
 }
-add_action( 'template_redirect', 'cleantheme_content_width', 0 );
 
 /**
  * Register custom fonts.
@@ -161,7 +144,7 @@ function cleantheme_fonts_url() {
 /**
  * Add preconnect for Google Fonts.
  *
- * @since Clean Theme 1.0
+ * @since cleantheme 1.0
  *
  * @param array  $urls           URLs to print for resource hints.
  * @param string $relation_type  The relation type the URLs are printed.
@@ -194,26 +177,6 @@ function cleantheme_widgets_init() {
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
 	) );
-
-	register_sidebar( array(
-		'name'          => __( 'Footer 1', 'cleantheme' ),
-		'id'            => 'sidebar-2',
-		'description'   => __( 'Add widgets here to appear in your footer.', 'cleantheme' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
-		'before_title'  => '<h2 class="widget-title">',
-		'after_title'   => '</h2>',
-	) );
-
-	register_sidebar( array(
-		'name'          => __( 'Footer 2', 'cleantheme' ),
-		'id'            => 'sidebar-3',
-		'description'   => __( 'Add widgets here to appear in your footer.', 'cleantheme' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
-		'before_title'  => '<h2 class="widget-title">',
-		'after_title'   => '</h2>',
-	) );
 }
 add_action( 'widgets_init', 'cleantheme_widgets_init' );
 
@@ -221,7 +184,7 @@ add_action( 'widgets_init', 'cleantheme_widgets_init' );
  * Replaces "[...]" (appended to automatically generated excerpts) with ... and
  * a 'Continue reading' link.
  *
- * @since Clean Theme 1.0
+ * @since cleantheme 1.0
  *
  * @param string $link Link to single post/page.
  * @return string 'Continue reading' link prepended with an ellipsis.
@@ -245,7 +208,7 @@ add_filter( 'excerpt_more', 'cleantheme_excerpt_more' );
  *
  * Adds a `js` class to the root `<html>` element when JavaScript is detected.
  *
- * @since Clean Theme 1.0
+ * @since cleantheme 1.0
  */
 function cleantheme_javascript_detection() {
 	echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
@@ -253,19 +216,9 @@ function cleantheme_javascript_detection() {
 add_action( 'wp_head', 'cleantheme_javascript_detection', 0 );
 
 /**
- * Add a pingback url auto-discovery header for singularly identifiable articles.
- */
-function cleantheme_pingback_header() {
-	if ( is_singular() && pings_open() ) {
-		printf( '<link rel="pingback" href="%s">' . "\n", get_bloginfo( 'pingback_url' ) );
-	}
-}
-add_action( 'wp_head', 'cleantheme_pingback_header' );
-
-/**
  * Enqueue scripts and styles.
  */
-function cleantheme_scripts() {
+function cleantheme_enqueue_scripts() {
 	// Add custom fonts, used in the main stylesheet.
 	wp_enqueue_style( 'cleantheme-fonts', cleantheme_fonts_url(), array(), null );
 
@@ -273,85 +226,17 @@ function cleantheme_scripts() {
 	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri() );
 
 	// Load the html5 shiv.
-	wp_enqueue_script( 'html5', get_theme_file_uri( '/assets/js/html5.js' ), array(), '3.7.3' );
+	wp_enqueue_script( 'html5', get_theme_file_uri( '/assets/js/html5.min.js' ), array(), '3.7.3' );
 	wp_script_add_data( 'html5', 'conditional', 'lt IE 9' );
 
-	wp_enqueue_script( 'cleantheme-global', get_theme_file_uri( '/assets/js/global.js' ), array( 'jquery' ), '1.0', true );
+	wp_enqueue_script( 'cleantheme-global', get_theme_file_uri( '/assets/js/global.min.js' ), array( 'jquery' ), '1.0', true );
 }
-add_action( 'wp_enqueue_scripts', 'cleantheme_scripts' );
-
-/**
- * Add custom image sizes attribute to enhance responsive image functionality
- * for content images.
- *
- * @since Clean Theme 1.0
- *
- * @param string $sizes A source size value for use in a 'sizes' attribute.
- * @param array  $size  Image size. Accepts an array of width and height
- *                      values in pixels (in that order).
- * @return string A source size value for use in a content image 'sizes' attribute.
- */
-function cleantheme_content_image_sizes_attr( $sizes, $size ) {
-	$width = $size[0];
-
-	if ( 740 <= $width ) {
-		$sizes = '(max-width: 706px) 89vw, (max-width: 767px) 82vw, 740px';
-	}
-
-	if ( is_active_sidebar( 'sidebar-1' ) || is_archive() || is_search() || is_home() || is_page() ) {
-		if ( ! ( is_page() && 'one-column' === get_theme_mod( 'page_options' ) ) && 767 <= $width ) {
-			 $sizes = '(max-width: 767px) 89vw, (max-width: 1000px) 54vw, (max-width: 1071px) 543px, 580px';
-		}
-	}
-
-	return $sizes;
-}
-add_filter( 'wp_calculate_image_sizes', 'cleantheme_content_image_sizes_attr', 10, 2 );
-
-/**
- * Filter the `sizes` value in the header image markup.
- *
- * @since Clean Theme 1.0
- *
- * @param string $html   The HTML image tag markup being filtered.
- * @param object $header The custom header object returned by 'get_custom_header()'.
- * @param array  $attr   Array of the attributes for the image tag.
- * @return string The filtered header image HTML.
- */
-function cleantheme_header_image_tag( $html, $header, $attr ) {
-	if ( isset( $attr['sizes'] ) ) {
-		$html = str_replace( $attr['sizes'], '100vw', $html );
-	}
-	return $html;
-}
-add_filter( 'get_header_image_tag', 'cleantheme_header_image_tag', 10, 3 );
-
-/**
- * Add custom image sizes attribute to enhance responsive image functionality
- * for post thumbnails.
- *
- * @since Clean Theme 1.0
- *
- * @param array $attr       Attributes for the image markup.
- * @param int   $attachment Image attachment ID.
- * @param array $size       Registered image size or flat array of height and width dimensions.
- * @return array The filtered attributes for the image markup.
- */
-function cleantheme_post_thumbnail_sizes_attr( $attr, $attachment, $size ) {
-	if ( is_archive() || is_search() || is_home() ) {
-		$attr['sizes'] = '(max-width: 767px) 89vw, (max-width: 1000px) 54vw, (max-width: 1071px) 543px, 580px';
-	} else {
-		$attr['sizes'] = '100vw';
-	}
-
-	return $attr;
-}
-add_filter( 'wp_get_attachment_image_attributes', 'cleantheme_post_thumbnail_sizes_attr', 10, 3 );
+add_action( 'wp_enqueue_scripts', 'cleantheme_enqueue_scripts' );
 
 /**
  * Use front-page.php when Front page displays is set to a static page.
  *
- * @since Clean Theme 1.0
+ * @since cleantheme 1.0
  *
  * @param string $template front-page.php.
  *
@@ -366,7 +251,7 @@ add_filter( 'frontpage_template',  'cleantheme_front_page_template' );
  * Modifies tag cloud widget arguments to display all tags in the same font size
  * and use list format for better accessibility.
  *
- * @since Clean Theme 1.4
+ * @since cleantheme 1.4
  *
  * @param array $args Arguments for tag cloud widget.
  * @return array The filtered arguments for tag cloud widget.
@@ -388,4 +273,10 @@ function cleantheme_is_frontpage() {
 	return ( is_front_page() && ! is_home() );
 }
 
-require_once('inc/template-tags.php');
+function cleantheme_doing_ajax() {
+	return function_exists('wp_doing_ajax') ? wp_doing_ajax() : (defined('DOING_AJAX') && DOING_AJAX);
+}
+
+function cleantheme_doing_cron() {
+	return function_exists('wp_doing_cron') ? wp_doing_cron() : (defined('DOING_CRON') && DOING_CRON);
+}

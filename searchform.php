@@ -1,9 +1,8 @@
 <?php
 /**
- * Template for displaying search forms in Twenty Seventeen
  *
  * @package WordPress
- * @subpackage Clean Theme
+ * @subpackage cleantheme
  * @since 1.0
  * @version 1.0
  */
@@ -16,6 +15,7 @@
 	<label for="<?php echo $unique_id; ?>">
 		<span class="screen-reader-text"><?php echo _x( 'Search for:', 'label', 'cleantheme' ); ?></span>
 	</label>
+	
 	<input type="search" id="<?php echo $unique_id; ?>" class="search-field" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'cleantheme' ); ?>" value="<?php echo get_search_query(); ?>" name="s" />
 	<button type="submit" class="search-submit"><span class="screen-reader-text"><?php echo _x( 'Search', 'submit button', 'cleantheme' ); ?></span></button>
 </form>

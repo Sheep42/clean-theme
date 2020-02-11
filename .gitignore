@@ -1,2 +1,35 @@
-wp-config.php
-node_modules/*
+# wordpress internals
+.maintenance
+
+# system
+.DS_Store
+npm-debug.log
+
+# gulp and node files
+node_modules
+*.css.map
+*.js.map
+
+# query monitor plugin
+wp-content/plugins/query-monitor/
+wp-content/db.php
+
+# debug bar plugin and its plugins
+wp-content/plugins/debug-bar/
+
+# cron control plugins
+wp-content/plugins/advanced-cron-manager/
+wp-content/plugins/wp-cron-control/
+
+# wordpress loose files
+license.txt
+readme.html
+wp-config-sample.php
+
+# wordfence plugin
+/wp-content/wflogs/
+/wordfence-waf.php
+
+#uploads
+wp-content/uploads/
+robots.txt

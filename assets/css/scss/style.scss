@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*!
-Theme Name: Clean Theme
+Theme Name: cleantheme
 Theme URI: https://dshedd.com/
 Author: Dan Shedd
 Author URI: https://dshedd.com/
@@ -32,7 +32,9 @@ $theme: "/wp-content/themes/clean-theme";
 @import "base/forms";
 
 // 3rd Party CSS
-//
+// @import "vendor/bootstrap/bootstrap";
+
+// Content
 @import "content/content";
 
 // Partials

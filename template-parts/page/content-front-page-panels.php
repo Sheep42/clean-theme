@@ -3,7 +3,7 @@
  * Template part for displaying pages on front page
  *
  * @package WordPress
- * @subpackage Clean Theme
+ * @subpackage cleantheme
  * @since 1.0
  * @version 1.0
  */
