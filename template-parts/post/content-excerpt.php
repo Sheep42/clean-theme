@@ -19,14 +19,11 @@
 	<header class="entry-header">
 		<?php if ( 'post' === get_post_type() ) : ?>
 			<div class="entry-meta">
-				<?php
-				echo cleantheme_time_link();
-				cleantheme_edit_link();
-				?>
+
 			</div><!-- .entry-meta -->
 		<?php elseif ( 'page' === get_post_type() && get_edit_post_link() ) : ?>
 			<div class="entry-meta">
-				<?php cleantheme_edit_link(); ?>
+				
 			</div><!-- .entry-meta -->
 		<?php endif; ?>
 

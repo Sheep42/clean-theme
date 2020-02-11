@@ -13,14 +13,14 @@ var gulp        = require('gulp'),
 gulp.task('browser-sync', function() {
    browserSync.init({
      // Change this to match your local environment
-     proxy: "localhost:8080",
+     proxy: "clean-theme.local",
      socket: {
          // For local development only use the default Browsersync local URL.
-         domain: 'clean-theme.local'
+         domain: 'localhost:3000'
          // For external development (e.g on a mobile or tablet) use an external URL.
          // You will need to update this to whatever BS tells you is the external URL when you run Gulp.
          // domain: '10.0.1.20:3000'
-     }
+     },
    });
 });
 
@@ -67,8 +67,17 @@ gulp.task('minify-js', function() {
 });
 
 gulp.task('watch', function () {
-    gulp.watch(['./assets/css/scss/**/*.scss'], gulp.series( 'styles' ));
-    gulp.watch(['./assets/js/src/**/*.js'], gulp.series( 'minify-js' ));
+    browserSync.init({
+        files: ['{lib,templates}/**/*.php', '*.php'],
+        proxy: "clean-theme.local",
+        snippetOptions: {
+          whitelist: ['/wp-admin/admin-ajax.php'],
+          blacklist: ['/wp-admin/**']
+        }
+    });
+    
+    gulp.watch(['./assets/css/scss/**/*.scss'], gulp.series( 'styles' )).on('change', browserSync.reload);
+    gulp.watch(['./assets/js/src/**/*.js'], gulp.series( 'minify-js' )).on('change', browserSync.reload);
 });
 
-gulp.task('default', gulp.series('browser-sync', gulp.parallel( 'styles', 'minify-js', 'watch' )) );
+gulp.task('default', gulp.parallel( 'styles', 'minify-js', 'watch' ) );

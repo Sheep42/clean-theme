@@ -17,12 +17,7 @@
 		<?php
 		if ( 'post' === get_post_type() ) {
 			echo '<div class="entry-meta">';
-				if ( is_single() ) {
-					cleantheme_posted_on();
-				} else {
-					echo cleantheme_time_link();
-					cleantheme_edit_link();
-				};
+			
 			echo '</div><!-- .entry-meta -->';
 		};
 
@@ -60,11 +55,5 @@
 		) );
 		?>
 	</div><!-- .entry-content -->
-
-	<?php
-	if ( is_single() ) {
-		cleantheme_entry_footer();
-	}
-	?>
 
 </article><!-- #post-## -->

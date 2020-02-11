@@ -12,6 +12,7 @@
 
 	/**
 	 * Test if an iOS device.
+	 * 
 	*/
 	function checkiOS() {
 		return /iPad|iPhone|iPod/.test(navigator.userAgent) && ! window.MSStream;
