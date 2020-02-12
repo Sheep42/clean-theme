@@ -6,6 +6,7 @@ var gulp        = require('gulp'),
     plumber     = require('gulp-plumber'),
     notify      = require('gulp-notify'),
     minify      = require('gulp-minify');
+    babel       = require('gulp-babel');
 
 /**
  * Launch the Server
@@ -55,6 +56,9 @@ gulp.task('styles', function () {
 gulp.task('minify-js', function() { 
     return gulp.src(['./assets/js/src/**/*.js', '!./assets/js/src/**/*.min.js'])
     .pipe(plumber())
+    .pipe(babel({
+        presets: ['@babel/env']
+    }))
     .pipe(minify({
         ext: {
             src : '.js',

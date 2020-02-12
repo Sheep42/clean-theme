@@ -219,6 +219,8 @@ add_action( 'wp_head', 'cleantheme_javascript_detection', 0 );
  * Enqueue scripts and styles.
  */
 function cleantheme_enqueue_scripts() {
+	// TODO: Add caching version
+	
 	// Add custom fonts, used in the main stylesheet.
 	wp_enqueue_style( 'cleantheme-fonts', cleantheme_fonts_url(), array(), null );
 
@@ -226,10 +228,10 @@ function cleantheme_enqueue_scripts() {
 	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri() );
 
 	// Load the html5 shiv.
-	wp_enqueue_script( 'html5', get_theme_file_uri( '/assets/js/html5.min.js' ), array(), '3.7.3' );
+	wp_enqueue_script( 'html5', get_theme_file_uri( '/assets/js/build/html5.min.js' ), array(), '3.7.3' );
 	wp_script_add_data( 'html5', 'conditional', 'lt IE 9' );
 
-	wp_enqueue_script( 'cleantheme-global', get_theme_file_uri( '/assets/js/global.min.js' ), array( 'jquery' ), '1.0', true );
+	wp_enqueue_script( 'cleantheme-global', get_theme_file_uri( '/assets/js/build/main.min.js' ), array( 'jquery' ), '1.0', true );
 
 	foreach( wp_scripts()->registered as $script ) {
 		// don't defer jquery
