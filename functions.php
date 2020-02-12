@@ -247,6 +247,13 @@ function cleantheme_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'cleantheme_enqueue_scripts' );
 
+function cleantheme_admin_enqueue_scripts() {
+	
+	wp_enqueue_script( 'cleantheme-admin-scripts', get_theme_file_uri( '/assets/js/build/admin.min.js' ), array( 'jquery' ), '1.0', true );
+
+}
+add_action( 'admin_enqueue_scripts', 'cleantheme_admin_enqueue_scripts' );
+
 /**
  * Use front-page.php when Front page displays is set to a static page.
  *
