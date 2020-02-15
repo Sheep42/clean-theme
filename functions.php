@@ -2,6 +2,9 @@
 
 function cleantheme_init() {
 
+	// Example simple post type registration
+	// cleantheme_register_post_type( 'Book', 'Books', 'book', 5, 'book-listing' );
+	
 }
 add_action( 'init', 'cleantheme_init' );
 
@@ -54,14 +57,8 @@ function cleantheme_setup() {
 		'caption',
 	) );
 
-	/*
-	 * This theme styles the visual editor to resemble the theme style,
-	 * specifically font, colors, and column width.
- 	 */
-	add_editor_style( array( 'assets/css/editor-style.css', cleantheme_fonts_url() ) );
+	cleantheme_front_page_template( 'front-page.php' );
 
-	// Example simple post type registration
-	// cleantheme_register_post_type( 'Book', 'Books', 'book', 5, 'book-listing' );
 }
 add_action( 'after_setup_theme', 'cleantheme_setup' );
 
@@ -215,8 +212,6 @@ add_action( 'widgets_init', 'cleantheme_widgets_init' );
  * Replaces "[...]" (appended to automatically generated excerpts) with ... and
  * a 'Continue reading' link.
  *
- * @since cleantheme 1.0
- *
  * @param string $link Link to single post/page.
  * @return string 'Continue reading' link prepended with an ellipsis.
  */
@@ -230,6 +225,7 @@ function cleantheme_excerpt_more( $link ) {
 		/* translators: %s: Name of current post */
 		sprintf( __( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'cleantheme' ), get_the_title( get_the_ID() ) )
 	);
+
 	return ' &hellip; ' . $link;
 }
 add_filter( 'excerpt_more', 'cleantheme_excerpt_more' );
@@ -262,8 +258,12 @@ function cleantheme_enqueue_scripts() {
 	wp_enqueue_script( 'html5', get_theme_file_uri( '/assets/js/build/html5.min.js' ), array(), '3.7.3' );
 	wp_script_add_data( 'html5', 'conditional', 'lt IE 9' );
 
-	wp_enqueue_script( 'cleantheme-global', get_theme_file_uri( '/assets/js/build/main.min.js' ), array( 'jquery' ), '1.0', true );
+	// enqueue main.min.js
+	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/main.min.js' ), array( 'jquery' ), '1.0', true );
 
+	/**
+	 *  Move scripts to the footer
+	 */
 	foreach( wp_scripts()->registered as $script ) {
 		// don't defer jquery
 
@@ -278,8 +278,12 @@ function cleantheme_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'cleantheme_enqueue_scripts' );
 
+/**
+ * Enqueue Admin scripts and styles
+ */
 function cleantheme_admin_enqueue_scripts() {
 	
+	// enqueue admin.min.js
 	wp_enqueue_script( 'cleantheme-admin-scripts', get_theme_file_uri( '/assets/js/build/admin.min.js' ), array( 'jquery' ), '1.0', true );
 
 }
