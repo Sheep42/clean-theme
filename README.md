@@ -11,7 +11,9 @@ The goal of this theme is to provide an easy to understand and easy to use boile
 ### Requirements
 
 **PHP**: 7.2+ Recommended
+
 **NodeJS**: 12.16.0+
+
 **WordPress**: 5.3.2
 
 ### Installing
