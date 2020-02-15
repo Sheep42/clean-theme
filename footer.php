@@ -1,19 +1,6 @@
-<?php
-/**
- * The template for displaying the footer
- *
- * Contains the closing of the #content div and all content after.
- *
- * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- *
- * @package WordPress
- * @subpackage cleantheme
- * @since 1.0
- * @version 1.2
- */
+<?php 
 
 ?>
-
 		</div><!-- #content -->
 
 		<footer id="colophon" class="site-footer" role="contentinfo">
@@ -33,7 +20,7 @@
 								) );
 							?>
 						</nav><!-- .social-navigation -->
-						
+
 					<?php endif;
 
 				get_template_part( 'template-parts/footer/site', 'info' );
@@ -42,6 +29,7 @@
 		</footer><!-- #colophon -->
 	</div><!-- .site-content-contain -->
 </div><!-- #page -->
+
 <?php wp_footer(); ?>
 
 </body>

@@ -1,11 +1,6 @@
 <?php
 /**
  * Displays content for front page
- *
- * @package WordPress
- * @subpackage cleantheme
- * @since 1.0
- * @version 1.0
  */
 
 ?>

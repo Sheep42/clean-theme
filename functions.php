@@ -38,10 +38,10 @@ function cleantheme_setup() {
 	add_image_size( 'cleantheme-featured-image', 2000, 1200, true );
 	add_image_size( 'cleantheme-thumbnail-avatar', 100, 100, true );
 
-	// This theme uses wp_nav_menu() in two locations.
-	// register_nav_menus( array(
-	// 	'top'    => __( 'Top Menu', 'cleantheme' ),
-	// ) );
+	register_nav_menus( array(
+		'top'    => __( 'Top Menu', 'cleantheme' ),
+		'social'    => __( 'Social Menu', 'cleantheme' ),
+	) );
 
 	/*
 	 * Switch default core markup for search form, comment form, and comments
@@ -200,9 +200,9 @@ add_filter( 'wp_resource_hints', 'cleantheme_resource_hints', 10, 2 );
  */
 function cleantheme_widgets_init() {
 	register_sidebar( array(
-		'name'          => __( 'Main Sidebar', 'cleantheme' ),
-		'id'            => 'sidebar-1',
-		'description'   => __( 'Add widgets here to appear in your sidebar on blog posts and archive pages.', 'cleantheme' ),
+		'name'          => __( 'Footer Widgets', 'cleantheme' ),
+		'id'            => 'footer-widgets',
+		'description'   => __( 'Add widgets here to appear in your footer', 'cleantheme' ),
 		'before_widget' => '<section id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h2 class="widget-title">',

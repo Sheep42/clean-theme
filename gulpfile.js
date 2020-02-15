@@ -8,23 +8,6 @@ var gulp        = require('gulp'),
     minify      = require('gulp-minify');
     babel       = require('gulp-babel');
 
-/**
- * Launch the Server
- */
-gulp.task('browser-sync', function() {
-   browserSync.init({
-     // Change this to match your local environment
-     proxy: "clean-theme.local",
-     socket: {
-         // For local development only use the default Browsersync local URL.
-         domain: 'localhost:3000'
-         // For external development (e.g on a mobile or tablet) use an external URL.
-         // You will need to update this to whatever BS tells you is the external URL when you run Gulp.
-         // domain: '10.0.1.20:3000'
-     },
-   });
-});
-
 // Title used for system notifications
 var notifyInfo = {
     title: 'Gulp'
