@@ -40,6 +40,7 @@ gulp.task('styles', function () {
 gulp.task('admin-js', function() { 
     return gulp.src(['./assets/js/src/admin/**/*.js'])
                 .pipe(plumber())
+                .pipe(sourcemaps.init())
                 .pipe(babel({
                     presets: ['@babel/env'],
                     ignore: ['**/*.min.js']
@@ -53,12 +54,14 @@ gulp.task('admin-js', function() {
                     ignoreFiles : ['**/*.min.js']
                 }))
                 .pipe(concat('admin.min.js'))
+                .pipe(sourcemaps.write('../maps'))
                 .pipe(gulp.dest('./assets/js/build/admin'));
 });
 
 gulp.task('theme-js', function() { 
     return gulp.src(['./assets/js/src/theme/**/*.js', './assets/js/src/vendor/**/*.js'])
                 .pipe(plumber())
+                .pipe(sourcemaps.init())
                 .pipe(babel({
                     presets: ['@babel/env'],
                     ignore: ['**/*.min.js']
@@ -72,6 +75,7 @@ gulp.task('theme-js', function() {
                     ignoreFiles : ['**/*.min.js']
                 }))
                 .pipe(concat('main.min.js'))
+                .pipe(sourcemaps.write('../maps'))
                 .pipe(gulp.dest('./assets/js/build/theme'));
 });
 
