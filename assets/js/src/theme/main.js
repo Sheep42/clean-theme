@@ -1,4 +1,3 @@
-/* global cleanthemeScreenReaderText */
 (function( $ ) {
 
 	// Variables and DOM Caching.
