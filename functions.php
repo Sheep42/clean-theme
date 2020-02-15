@@ -183,44 +183,34 @@ function cleantheme_register_post_type(
 }
 
 /**
- * Register custom fonts.
+ * 	Register google fonts.
  */
-function cleantheme_fonts_url() {
+function cleantheme_goole_fonts_url() {
 	$fonts_url = '';
+	$font_families = array(
+		'Open Sans:300,300i,400,400i,600,600i,800,800i',
+	);
 
-	/*
-	 * Translators: If there are characters in your language that are not
-	 * supported by Libre Franklin, translate this to 'off'. Do not translate
-	 * into your own language.
-	 */
-	$libre_franklin = _x( 'on', 'Libre Franklin font: on or off', 'cleantheme' );
+	$query_args = array(
+		'family' => urlencode( implode( '|', $font_families ) ),
+		'subset' => urlencode( 'latin,latin-ext' ),
+		'display' => urlencode( 'swap' ),
+	);
 
-	if ( 'off' !== $libre_franklin ) {
-		$font_families = array();
-
-		$font_families[] = 'Libre Franklin:300,300i,400,400i,600,600i,800,800i';
-
-		$query_args = array(
-			'family' => urlencode( implode( '|', $font_families ) ),
-			'subset' => urlencode( 'latin,latin-ext' ),
-		);
-
-		$fonts_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
-	}
+	$fonts_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
 
 	return esc_url_raw( $fonts_url );
 }
 
 /**
- * Add preconnect for Google Fonts.
- *
- * @since cleantheme 1.0
+ * 	Add DNS prefetching for external resources
  *
  * @param array  $urls           URLs to print for resource hints.
  * @param string $relation_type  The relation type the URLs are printed.
  * @return array $urls           URLs to print for resource hints.
  */
 function cleantheme_resource_hints( $urls, $relation_type ) {
+
 	if ( wp_style_is( 'cleantheme-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
 		$urls[] = array(
 			'href' => 'https://fonts.gstatic.com',
@@ -229,13 +219,12 @@ function cleantheme_resource_hints( $urls, $relation_type ) {
 	}
 
 	return $urls;
+
 }
 add_filter( 'wp_resource_hints', 'cleantheme_resource_hints', 10, 2 );
 
 /**
  * Register widget area.
- *
- * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
 function cleantheme_widgets_init() {
 	register_sidebar( array(
@@ -290,8 +279,8 @@ add_action( 'wp_head', 'cleantheme_javascript_detection', 0 );
 function cleantheme_enqueue_scripts() {
 	// TODO: Add caching version
 	
-	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'cleantheme-fonts', cleantheme_fonts_url(), array(), null );
+	// Add google fonts, used in the main stylesheet.
+	wp_enqueue_style( 'cleantheme-fonts', cleantheme_goole_fonts_url(), array(), null );
 
 	// Theme base stylesheet.
 	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri() );
