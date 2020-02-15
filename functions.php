@@ -287,7 +287,6 @@ function cleantheme_enqueue_scripts() {
 
 	// enqueue main.min.js
 	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/theme/main.min.js' ), array( 'jquery' ), '1.0', true );
-	wp_script_add_data( 'cleantheme-main-scripts', 'conditional', 'lt IE 9' );
 
 	/**
 	 *  Move scripts to the footer
