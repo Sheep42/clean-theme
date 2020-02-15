@@ -59,39 +59,70 @@ function cleantheme_setup() {
 	 * specifically font, colors, and column width.
  	 */
 	add_editor_style( array( 'assets/css/editor-style.css', cleantheme_fonts_url() ) );
+
+	// Example simple post type registration
+	// cleantheme_register_post_type( 'Book', 'Books', 'book', 5, 'book-listing' );
 }
 add_action( 'after_setup_theme', 'cleantheme_setup' );
 
 /**
- * Example post type registration, replace details below
- * and call function inside of cleantheme_init
+ *  Abstraction for SIMPLE post type registration, to override arguments
+ *  or change post capability type you should use register_post_type directly.
+ *
+ *  Remember to flush permalinks after registering a new post type
+ *
+ * @param 	string 	$singular 			The singular display name for the post type
+ * @param 	string 	$plural 			The plural display name for the post type
+ * @param   string 	$slug 	 			The post type slug
+ * @param   int 	$menu_position 	 	The menu position for the post type - defaults to 5
+ * @param   string 	$rewrite 	 		Override the archive slug for this post type - defaults to $slug
+ * @param   bool 	$archive 	 		True / False - Create an archive for this post type
+ * @param   bool 	$hierarchical 		True / False - Is this post type hierarchical? (Does it have parent / child relationships)
+ * @param 	array 	$supports 			The supports array for this post type - See codex for details
  */
-function cleantheme_register_post_type() {
+function cleantheme_register_post_type( 
+	$singular, 
+	$plural, 
+	$slug, 
+	$menu_position = 5, 
+	$rewrite = '', 
+	$archive = true, 
+	$hierarchical = true, 
+	$supports = array( 'title', 'editor', 'thumbnail' ) 
+) {
+
+	// Bail if missing any of the 3 absolute requirements
+	if( empty( $singular ) || empty( $plural ) || empty( $slug ) ) {
+		return;
+	}
+
+	$rewrite = empty( $rewrite ) ? $slug : $rewrite;
+
 	$labels = array(
-        'name'                  => _x( 'Books', 'Post type general name', 'textdomain' ),
-        'singular_name'         => _x( 'Book', 'Post type singular name', 'textdomain' ),
-        'menu_name'             => _x( 'Books', 'Admin Menu text', 'textdomain' ),
-        'name_admin_bar'        => _x( 'Book', 'Add New on Toolbar', 'textdomain' ),
-        'add_new'               => __( 'Add New', 'textdomain' ),
-        'add_new_item'          => __( 'Add New Book', 'textdomain' ),
-        'new_item'              => __( 'New Book', 'textdomain' ),
-        'edit_item'             => __( 'Edit Book', 'textdomain' ),
-        'view_item'             => __( 'View Book', 'textdomain' ),
-        'all_items'             => __( 'All Books', 'textdomain' ),
-        'search_items'          => __( 'Search Books', 'textdomain' ),
-        'parent_item_colon'     => __( 'Parent Books:', 'textdomain' ),
-        'not_found'             => __( 'No books found.', 'textdomain' ),
-        'not_found_in_trash'    => __( 'No books found in Trash.', 'textdomain' ),
-        'featured_image'        => _x( 'Book Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
-        'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-        'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-        'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-        'archives'              => _x( 'Book archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
-        'insert_into_item'      => _x( 'Insert into book', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
-        'uploaded_to_this_item' => _x( 'Uploaded to this book', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
-        'filter_items_list'     => _x( 'Filter books list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
-        'items_list_navigation' => _x( 'Books list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
-        'items_list'            => _x( 'Books list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+        'name'                  => _x( $plural, '', 'cleantheme' ),
+        'singular_name'         => _x( $singular, '', 'cleantheme' ),
+        'menu_name'             => _x( $plural, '', 'cleantheme' ),
+        'name_admin_bar'        => _x( $singular, '', 'cleantheme' ),
+        'add_new'               => __( 'Add New', 'cleantheme' ),
+        'add_new_item'          => __( 'Add New ' . $singular, 'cleantheme' ),
+        'new_item'              => __( 'New ' . $singular, 'cleantheme' ),
+        'edit_item'             => __( 'Edit ' . $singular, 'cleantheme' ),
+        'view_item'             => __( 'View ' . $singular, 'cleantheme' ),
+        'all_items'             => __( 'All '. $plural, 'cleantheme' ),
+        'search_items'          => __( 'Search ' . $plural, 'cleantheme' ),
+        'parent_item_colon'     => __( 'Parent ' . $plural . ':', 'cleantheme' ),
+        'not_found'             => __( 'No ' . $plural .' found.', 'cleantheme' ),
+        'not_found_in_trash'    => __( 'No ' . $plural . ' found in Trash.', 'cleantheme' ),
+        'featured_image'        => _x( $singular . ' Featured Image', '', 'cleantheme' ),
+        'set_featured_image'    => _x( 'Set featured image', '', 'cleantheme' ),
+        'remove_featured_image' => _x( 'Remove featured image', '', 'cleantheme' ),
+        'use_featured_image'    => _x( 'Use as featured image', '', 'cleantheme' ),
+        'archives'              => _x( $singular . ' archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'cleantheme' ),
+        'insert_into_item'      => _x( 'Insert into ' . $singular, '', 'cleantheme' ),
+        'uploaded_to_this_item' => _x( 'Uploaded to this ' . $singular, '', 'cleantheme' ),
+        'filter_items_list'     => _x( 'Filter ' . $plural . ' list', '', 'cleantheme' ),
+        'items_list_navigation' => _x( $plural . ' list navigation', '', 'cleantheme' ),
+        'items_list'            => _x( $plural . ' list', '', 'cleantheme' ),
     );
  
     $args = array(
@@ -101,15 +132,15 @@ function cleantheme_register_post_type() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'book' ),
+        'rewrite'            => array( 'slug' => ( $rewrite ) ),
         'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => null,
-        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
+        'has_archive'        => $archive,
+        'hierarchical'       => $hierarchical,
+        'menu_position'      => $menu_position,
+        'supports'           => $supports,
     );
  
-    register_post_type( 'book', $args );
+    register_post_type( $slug, $args );
 }
 
 /**
