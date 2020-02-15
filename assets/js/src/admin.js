@@ -3,6 +3,12 @@ var $body = $('body'),
 
 
 $(document).ready(function() {
+
+	/**
+	 * Appends a 'template-template-slug.php' body class in 
+	 * the WP admin when adding / editing a page and updates
+	 * when the template is changed
+	 */
 	if( ( $body.hasClass('post-php') || $body.hasClass('post-new-php') ) && $page_template_select.length > 0 ) {
 		var template_class = wp_admin_template_body_class( '', $page_template_select.val() );
 
@@ -13,6 +19,7 @@ $(document).ready(function() {
 
 		});
 	}
+	
 });
 
 function wp_admin_template_body_class( old_template, template ) {
