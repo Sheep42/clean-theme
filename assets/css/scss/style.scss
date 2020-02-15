@@ -4,40 +4,46 @@ Theme Name: cleantheme
 Theme URI: https://dshedd.com/
 Author: Dan Shedd
 Author URI: https://dshedd.com/
-Description: A boilerplate theme for custom WordPress development. Created with Twenty Seventeen and reduced down to bare minimum. Supports Sass and uses Gulp to compile and minify JS and Sass.
+Description: This is a stripped down WordPress theme created for custom theme developers to use as a starting point. 
+This is the theme I use for my own side projects. I've tried to take a minimalist approach while including some 
+convenience functions and libraries that I like to use. The goal of this theme is to provide an easy to understand 
+and easy to use boilerplate theme for any custom WordPress project. 
 Version: 1.0
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: MIT License (Expat)
+License URI: https://directory.fsf.org/wiki/License:Expat
 Text Domain: cleantheme
-
-This theme, like WordPress, is licensed under the GPL.
-Use it to make something cool, have fun, and share what you've learned with others.
 */
 
 $theme: "/wp-content/themes/clean-theme";
 
-//	Variables, Mixins, Utility Classes
-@import "utility/breakpoints";
+//	Mixins & Utility Classes
 @import "utility/mixins";
 @import "utility/classes";
+
+// Css Reset
 @import "vendor/reset";
 
-//	Images, Colors and Font variables
-@import "assets/images";
-@import "assets/colors";
-@import "assets/fonts";
+// Variables
+@import "variables/breakpoints";
+@import "variables/images";
+@import "variables/colors";
+@import "variables/fonts";
 
+// Base Styles
 @import "base/base";
 @import "base/typography";
 @import "base/forms";
 
-// 3rd Party CSS
+// 3rd Party 
 // @import "vendor/bootstrap/bootstrap";
 
 // Content
-@import "content/content";
+@import "content/page";
+@import "content/front-page";
+// @import "content/new-page-template";
+// @import "content/new-post-type";
 
-// Partials
+// Global
 @import "global/header";
 @import "global/navigation";
 @import "global/sidebar";
