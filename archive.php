@@ -6,11 +6,7 @@ get_header(); ?>
 
 	<?php if ( have_posts() ) : ?>
 		<header class="page-header">
-			<?php
-				// TODO: Escape
-				the_archive_title( '<h1 class="page-title">', '</h1>' );
-				the_archive_description( '<div class="taxonomy-description">', '</div>' );
-			?>
+			<h1 class="page-title"><?php esc_html_e( get_the_archive_title() ); ?></h1>
 		</header><!-- .page-header -->
 	<?php endif; ?>
 
