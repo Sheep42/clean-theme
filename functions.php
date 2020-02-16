@@ -185,7 +185,7 @@ function cleantheme_register_post_type(
 /**
  * 	Register google fonts.
  */
-function cleantheme_goole_fonts_url() {
+function cleantheme_google_fonts_url() {
 	$fonts_url = '';
 	$font_families = array(
 		'Open Sans:300,300i,400,400i,600,600i,800,800i',
@@ -280,7 +280,7 @@ function cleantheme_enqueue_scripts() {
 	// TODO: Add caching version
 	
 	// Add google fonts, used in the main stylesheet.
-	wp_enqueue_style( 'cleantheme-fonts', cleantheme_goole_fonts_url(), array(), null );
+	wp_enqueue_style( 'cleantheme-fonts', cleantheme_google_fonts_url(), array(), null );
 
 	// Theme base stylesheet.
 	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri() );
