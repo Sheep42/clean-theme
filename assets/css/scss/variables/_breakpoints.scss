@@ -1,12 +1,17 @@
 @charset "UTF-8";
 //  _breakpoints.scss
 
+// Mobile
 $break-mobileXSmall: 320px;
 $break-mobileSmall: 375px;
 $break-mobileMedium: 425px;
 $break-mobileLarge: 600px;
+
+// Tablet
 $break-tabletSmall: 768px;
+
+// Desktop
 $break-desktopSmall: 1024px;
 $break-desktopMedium: 1366px;
 $break-desktopLarge: 1920px;
-$break-desktopXLarge: 2560px;  // 2k, 4k+
+$break-desktopXLarge: 2560px;

@@ -6,7 +6,6 @@ body {
 	font-family: $font-global;
 	font-size: 16px;
 	line-height: 1.5625; // 25 / 16
-	transition: 0.2s font;
 }
 
 h1,
@@ -81,8 +80,4 @@ table {
 	th {
 
 	}
-}
-
-@media (min-width: $break-desktopSmall) {
-
 }

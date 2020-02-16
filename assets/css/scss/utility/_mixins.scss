@@ -12,35 +12,6 @@
 	}
 }
 
-@mixin aspect-ratio($width, $height, $contentSelector) {
-	position: relative;
-	overflow: hidden;
-	&:before {
-		display: block;
-		content: "";
-		width: 100%;
-		padding-top: ($height / $width) * 100%;
-	}
-	> #{$contentSelector} {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-	}
-}
-
-@mixin aspect-ratio-single-element($width, $height) {
-	position: relative;
-	overflow: hidden;
-	&:before {
-		display: block;
-		content: "";
-		width: 100%;
-		padding-top: ($height / $width) * 100%;
-	}
-}
-
 @mixin icon-pseudo-element($height, $width) {
 	content: '';
 	background-repeat: no-repeat;
@@ -48,42 +19,4 @@
 	background-position: center;
 	height: $height;
 	width: $width;
-}
-
-@function calculateRem($size) {
-	$remSize: $size / 16px;
-	@return #{$remSize}rem;
-}
-@mixin fontsize($size) {
-	font-size: $size; 
-	font-size: calculateRem($size);
-}
-
-// element-invisible improved and more robust
-@mixin element-invisible {
-	border: 0;
-	height: 1px;
-	overflow: hidden;
-	padding: 0;
-	position: absolute !important;
-	width: 1px;
-	clip: rect(1px, 1px, 1px, 1px);
-}
-	
-// Turns off the element-invisible effect
-@mixin element-invisible-off {
-	position: static !important;
-	clip: auto;
-	height: auto;
-	width: auto;
-	overflow: auto;
-}
-	
-@mixin element-focusable {
-	@include element-invisible;
-	
-	&:active,
-	&:focus {
-		@include element-invisible-off;
-	}
 }
