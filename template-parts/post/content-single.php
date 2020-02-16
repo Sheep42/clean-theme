@@ -8,6 +8,10 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<h1 class="entry-title"><?php esc_html_e( get_the_title() ); ?></h1>
+		
+		<div class="entry-meta">
+			<?php esc_html_e( get_the_date() ); ?>
+		</div><!-- .entry-meta -->
 	</header><!-- .entry-header -->
 
 	<?php if ( '' !== get_the_post_thumbnail() && ! is_single() ) : ?>
@@ -20,7 +24,6 @@
 
 	<div class="entry-content">
 		<?php
-		/* translators: %s: Name of current post */
 		the_content();
 
 		// wp_link_pages( array(
