@@ -113,7 +113,7 @@ Browser-sync is included and enabled by default. If you are unaware, browser-syn
 
 Inside of the `browserSync.init()` options, you'll need to modify the line that reads `proxy: "clean-theme.local"` to reflect your local environment's url. You'll also want to update the line that reads `files: ['template-parts/**/*.php', '*.php']`  to include any additional file paths that you would like to watch for changes.
 
-### I don't want to use browser-sync
+#### I don't want to use browser-sync
 
 If you do not have a local environment, or prefer not to use browser-sync you can comment or remove the entire browser-sync init call from `gulpfile.js`:
 
