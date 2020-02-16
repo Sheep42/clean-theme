@@ -1,7 +1,6 @@
 <?php
 /**
  * Template part for displaying posts with excerpts
- * Used in Search Results and for Recent Posts in Front Page panels.
  */
 
 ?>
