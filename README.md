@@ -2,7 +2,7 @@
 
 # WordPress Clean Theme
 
-**TL;DR:** This is a stripped down WordPress theme created for custom theme developers to use as a starting point. This is the theme I use for my own side projects. I've tried to take a minimalist approach while including some convenience functions and libraries that I like to use. [Getting Started](#getting-started) should give you enough of an overview to get going if you don't want to read all of the details.
+**TL;DR:** This is a stripped down WordPress theme created for custom theme developers to use as a starting point. This is the theme I use for my own side projects. I've tried to take a minimalist approach while including some [convenience functions](#convenience--utility) and [libraries](#included-technologies) that I like to use. [Getting Started](#getting-started) should give you enough of an overview to get going if you don't want to read all of the details.
 
 # What This is Not
 
@@ -85,6 +85,15 @@ When  following this convention, single.php and archive.php will automatically l
 	    ├── content-none.php ─ Not found content for the 'book' post type
 	    └── content-single.php ─ Single page content for a 'book'
 
+### Assets
+Source js files are located in `assets/js/src/`
+Source scss files are located in `assets/css/scss/`
+Images for css use should be placed in `assets/images/`
+Sass imports are all set up in `assets/css/scss/style.scss`
+
+Jump to more info on [JS](#js)
+Jump to more info on [Sass](#sass)
+
 # Included Technologies
 
 ### Bootstrap
@@ -92,7 +101,7 @@ When  following this convention, single.php and archive.php will automatically l
 ##### Version: 4.3.1
 [Bootstrap Documentation](https://getbootstrap.com/docs/)
 
-The Bootstrap scss is included in this theme for you to use and modify. By default, the theme does not import any of the bootstrap css. This is by design, it's up to you to import the stylesheets that you want or need from the bootstrap library. See the Sass & CSS section for more details.
+The Bootstrap scss is included in this theme for you to use and modify. By default, the theme does not import any of the bootstrap css. This is by design, it's up to you to import the stylesheets that you want or need from the bootstrap library. See the [Sass section](#sass) for more details.
 
 The minified bootstrap JS is also included in this theme. The bootstrap JS is loaded by default, to learn more about how vendor JS is imported into the theme, take a look at the JS section.
 
@@ -161,19 +170,78 @@ The basic sass structure is as follows:
     └── style.scss ─ Imports, this is the file which is eventually compiled and minified
 	
 #### JS
+In general `.js` files will be minified and transpiled by babel. 
+Babel and minify are configured to skip `.min.js` files. 
 
+JavaScript files in this theme are broken out into 3 main directories. 
 
-# Convenience Functions
+##### admin
+This directory contains scripts intended to run only in the WordPress admin dashboard. Files in this directory will be passed through babel and minify, and then concatenated and output into `assets/js/build/admin/admin.min.js` 
+This file is included via an admin_enqueue_scripts hook.
 
-### Google Font Loading
+##### theme
+This directory contains scripts intended to run only on the front-end. Files in this directory will be passed through babel and minify, and then concatenated and output into `assets/js/build/theme/build.min.js` 
+This file is included via a wp_enqueue_scripts hook.
 
+##### vendor 
+This directory is intended for 3rd party scripts that you would like to include in your project. Files placed here should always be pre-minified and should follow the naming convention `*.min.js`. Scripts placed in this directory will be concatenated with the theme scripts and output into main.min.js.
+Included by default are Slick Slider and Bootstrap. To remove either, simply delete the desired file and rebuild the assets.
 
-### Simple Post Type Creation
+Here is what the default directory structure looks like:
 
+		├── src 
+		    ├── admin 
+		    │   └── admin.js
+		    ├── theme
+		    │   └── main.js
+		    └── vendor
+		        ├── bootstrap.min.js
+		        └── slick.min.js
 
-### Virtual Page Creation
+#### Sourcemaps
+The build system is configured to generate sourcemaps for both CSS and JS. 
+CSS sourcemaps are output to `assets/css/maps/`
+JS sourcemaps are output to `assets/js/build/maps/`
 
+You can disable sourcemaps by removing the calls to `sourcemaps` from the gulp tasks `admin-js` and `theme-js` inside of `gulpfile.js`.
 
-### Page Template Admin Body Class
+# Convenience & Utility 
 
+### functions.php
 
+I've left in a small handful of helpful default WordPress theme functions including, but not limited to DNS prefetching and Google font loading. I'll briefly describe each.
+
+##### DNS Prefetch
+**function:** `cleantheme_resource_hints()`
+This function hooks wp_resource_hints to speed up the loading of external resources by resolving the DNS before the request is made.
+
+Out of the box, this is only prefetching Google fonts. You can utilize this for your other external resources, though by following the same pattern already used.
+
+##### Google Font Loading
+**function:** `cleantheme_google_fonts_url()`
+This function builds out the google fonts url for use in enqueuing the stylesheet. 
+
+Out of the box, this includes Open Sans in the theme. Adding additional font strings to the $font_families array will include those in your project as well. 
+
+##### Simple Post Type Creation
+**function:** `cleantheme_register_post_type()`
+This is an abstraction to simplify the creation of simple post types. The idea is that if you need to create a post type quickly without too much customization, this will take care of building the labels and setting the options for you. 
+
+This is **not** meant to be a replacement for `register_post_type()`. Simply a faster process when that level of granular control is not required.
+
+See the documentation inside of function.php for usage information.
+
+##### Virtual Page Creation
+This is a collection of hooks, commented out by default, inside of the theme function which hooks `init`. 
+
+These functions will create a rewrite rule inside of WordPress to handle a url that would otherwise generate a 404, allowing you to actually render content at that url.
+
+This is useful if you need to create a url outside of the context of WordPress which has to render content. For example, a dynamically generated pdf download located at https://example.com/my-pdf?first_name=John&last_name=Smith
+
+Another example is if you want to create a custom listing page without requiring someone to create a WordPress page using a custom template.
+
+### admin.js
+##### Page Template Admin Body Class
+The only JavaScript included in admin.js out of the box is a small snippet of jQuery which will append a body class of `template-template-slug.php` when adding / editing a page. The body class will update when the dropdown is changed.
+
+This can be useful if you need to target admin elements for styling based on specific page templates. 
