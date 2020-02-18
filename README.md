@@ -213,18 +213,21 @@ I've left in a small handful of helpful default WordPress theme functions includ
 
 ##### DNS Prefetch
 **function:** `cleantheme_resource_hints()`
+
 This function hooks wp_resource_hints to speed up the loading of external resources by resolving the DNS before the request is made.
 
 Out of the box, this is only prefetching Google fonts. You can utilize this for your other external resources, though by following the same pattern already used.
 
 ##### Google Font Loading
 **function:** `cleantheme_google_fonts_url()`
+
 This function builds out the google fonts url for use in enqueuing the stylesheet. 
 
 Out of the box, this includes Open Sans in the theme. Adding additional font strings to the $font_families array will include those in your project as well. 
 
 ##### Simple Post Type Creation
 **function:** `cleantheme_register_post_type()`
+
 This is an abstraction to simplify the creation of simple post types. The idea is that if you need to create a post type quickly without too much customization, this will take care of building the labels and setting the options for you. 
 
 This is **not** meant to be a replacement for `register_post_type()`. Simply a faster process when that level of granular control is not required.
