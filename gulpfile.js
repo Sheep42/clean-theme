@@ -5,9 +5,10 @@ const   gulp        = require('gulp'),
         sourcemaps  = require('gulp-sourcemaps'),
         plumber     = require('gulp-plumber'),
         notify      = require('gulp-notify'),
-        minify      = require('gulp-minify');
-        babel       = require('gulp-babel');
-        concat      = require('gulp-concat');
+        minify      = require('gulp-minify'),
+        babel       = require('gulp-babel'),
+        concat      = require('gulp-concat'),
+        fs          = require('fs');
 
 // Title used for system notifications
 var notifyInfo = {
@@ -21,6 +22,22 @@ var plumberErrorHandler = { errorHandler: notify.onError({
         message: "Error: <%= error.message %>"
     })
 };
+
+function cache_version_update() {
+    var cache_version_filename =  __dirname + '/cache_version.txt';
+    var now = new Date();
+    var datestamp = Math.round(now.getTime() / 1000);
+
+    fs.writeFileSync( cache_version_filename, datestamp, function(err, data) {
+        if (err) {
+            console.log('error writing ' + cache_version_filename + ': ' + err);
+        }
+    });
+
+    return gulp.src( cache_version_filename )
+    .pipe( gulp.dest( __dirname ) );
+
+}
 
 /**
  *  compile scripts
@@ -80,8 +97,8 @@ function watch() {
         }
     });
     
-    gulp.watch(['./assets/css/scss/**/*.scss'], gulp.series( styles )).on('change', browserSync.reload);
-    gulp.watch(['./assets/js/src/**/*.js'], gulp.parallel( theme_js, admin_js )).on('change', browserSync.reload);
+    gulp.watch(['./assets/css/scss/**/*.scss'], gulp.series( styles, cache_version_update )).on('change', browserSync.reload);
+    gulp.watch(['./assets/js/src/**/*.js'], gulp.series( gulp.parallel( theme_js, admin_js ), cache_version_update )).on('change', browserSync.reload);
 }
 
-exports.default = gulp.series( gulp.parallel( styles, theme_js, admin_js ), watch );
+exports.default = gulp.series( gulp.parallel( styles, theme_js, admin_js ), cache_version_update, watch );

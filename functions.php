@@ -276,24 +276,23 @@ add_action( 'wp_head', 'cleantheme_javascript_detection', 0 );
 /**
  * Enqueue scripts and styles.
  */
-function cleantheme_enqueue_scripts() {
-	// TODO: Add caching version
-	
+function cleantheme_enqueue_scripts() {	
+	$cache_version = _cleanhmeme_get_cache_version();
+
 	// Add google fonts, used in the main stylesheet.
 	wp_enqueue_style( 'cleantheme-fonts', cleantheme_google_fonts_url(), array(), null );
 
 	// Theme base stylesheet.
-	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri(), array(), $cache_version );
 
 	// enqueue main.min.js
-	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/theme/main.min.js' ), array( 'jquery' ), '1.0', true );
+	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/theme/main.min.js' ), array( 'jquery' ), $cache_version, true );
 
 	/**
 	 *  Move scripts to the footer
 	 */
 	foreach( wp_scripts()->registered as $script ) {
 		// don't defer jquery
-
 		$dont_defer = array( 'jquery' );
 
 		if( in_array( $script->handle, $dont_defer ) ) {
@@ -309,12 +308,38 @@ add_action( 'wp_enqueue_scripts', 'cleantheme_enqueue_scripts' );
  * Enqueue Admin scripts and styles
  */
 function cleantheme_admin_enqueue_scripts() {
+	$cache_version = _cleanhmeme_get_cache_version();
 	
 	// enqueue admin.min.js
-	wp_enqueue_script( 'cleantheme-admin-scripts', get_theme_file_uri( '/assets/js/build/admin/admin.min.js' ), array( 'jquery' ), '1.0', true );
+	wp_enqueue_script( 'cleantheme-admin-scripts', get_theme_file_uri( '/assets/js/build/admin/admin.min.js' ), array( 'jquery' ), $cache_version, true );
 
 }
 add_action( 'admin_enqueue_scripts', 'cleantheme_admin_enqueue_scripts' );
+
+function _cleanhmeme_get_cache_version() {
+	$cache_version = wp_cache_get( 'scripts_styles_cache_version', 'cleantheme', false, $found );
+
+	if( false !== $cache_version ) {
+		return $cache_version;
+	} else {
+		if ( defined('WP_DEBUG') && WP_DEBUG ) {
+			// always bust cache when WP_DEBUG is turned on 
+			$cache_version = bin2hex(random_bytes(4));
+		} else {
+			$cache_version = file_get_contents( get_template_directory() . '/cache_version.txt' );
+
+			if ( false === $cache_version ) {
+				error_log('warning: caching date missing or invalid. run gulp to regenerate it.');
+				$cache_version = null;
+			}
+
+		}
+
+		wp_cache_set( 'scripts_styles_cache_version', $cache_version, 'cleantheme' );
+	}
+
+	return $cache_version;
+}
 
 /**
  * Use front-page.php when Front page displays is set to a static page.
