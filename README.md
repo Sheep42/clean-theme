@@ -232,7 +232,7 @@ This is an abstraction to simplify the creation of simple post types. The idea i
 
 This is **not** meant to be a replacement for `register_post_type()`. Simply a faster process when that level of granular control is not required.
 
-See the documentation inside of function.php for usage information.
+See the documentation inside of functions.php for usage information.
 
 ##### Virtual Page Creation
 This is a collection of hooks, commented out by default, inside of the theme function which hooks `init`. 
