@@ -276,17 +276,16 @@ add_action( 'wp_head', 'cleantheme_javascript_detection', 0 );
 /**
  * Enqueue scripts and styles.
  */
-function cleantheme_enqueue_scripts() {	
-	$cache_version = _cleanhmeme_get_cache_version();
+function cleantheme_enqueue_scripts() {
 
 	// Add google fonts, used in the main stylesheet.
 	wp_enqueue_style( 'cleantheme-fonts', cleantheme_google_fonts_url(), array(), null );
 
 	// Theme base stylesheet.
-	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri(), array(), $cache_version );
+	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri(), array(), _cleanhmeme_get_cache_version( 'style.css' ) );
 
 	// enqueue main.min.js
-	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/theme/main.min.js' ), array( 'jquery' ), $cache_version, true );
+	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/theme/main.min.js' ), array( 'jquery' ), _cleanhmeme_get_cache_version( 'main.min.js' ), true );
 
 	/**
 	 *  Move scripts to the footer
@@ -315,20 +314,52 @@ function cleantheme_admin_enqueue_scripts() {
 }
 add_action( 'admin_enqueue_scripts', 'cleantheme_admin_enqueue_scripts' );
 
-function _cleanhmeme_get_cache_version() {
+/**
+ * Get the cache version for a given file 
+ * from the asset manifest file
+ * 
+ * @param  string $filename  The file
+ *
+ * @return The caching version of the file
+ */
+function _cleanhmeme_get_cache_version( $filename ) {
+
+	$found = false;
+	$cache_version = null;
+
 	if ( defined('WP_DEBUG') && WP_DEBUG ) {
 		// always bust cache when WP_DEBUG is turned on 
-		$cache_version = bin2hex(random_bytes(4));
-	} else {
-		$cache_version = file_get_contents( get_template_directory() . '/cache_version.txt' );
+		$cache_version = wp_cache_get( 'cache_version', 'cleantheme', false, $found );
 
-		if ( false === $cache_version ) {
-			error_log('warning: cache version is missing. run gulp to regenerate it.');
-
-			// null will make sure WP 
-			// appends no cache version
-			$cache_version = null;
+		if( false === $found ) {
+			$cache_version = bin2hex(random_bytes(4));
+			wp_cache_set( 'cache_version', $cache_version, 'cleantheme' );
 		}
+
+	} else {
+		$asset_manifest = wp_cache_get( 'asset_cache_manifest', 'cleantheme', false, $found );
+
+		if( false === $found ) {
+
+			$asset_manifest = file_get_contents( get_template_directory() . '/asset_cache_manifest.json' );
+
+			if ( false === $asset_manifest ) {
+				error_log('warning: cache version is missing. run gulp to regenerate it.');
+
+				// null will make sure WP 
+				// appends no cache version
+				$cache_version = null;
+			}
+
+			// cache the asset manifest for this page load
+			wp_cache_set( 'asset_cache_manifest', $asset_manifest, 'cleantheme' );
+
+		}
+
+		$asset_manifest_json = json_decode( $asset_manifest );
+
+		if( !empty( $asset_manifest_json->$filename ) )
+			$cache_version = $asset_manifest_json->$filename;
 	}
 
 	return $cache_version;

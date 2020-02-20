@@ -8,7 +8,10 @@ const   gulp        = require('gulp'),
         minify      = require('gulp-minify'),
         babel       = require('gulp-babel'),
         concat      = require('gulp-concat'),
-        fs          = require('fs');
+        fs          = require('fs'),
+        crypto      = require('crypto'),
+        argv        = require('yargs').argv,
+        shasum      = crypto.createHash('sha256');
 
 // Title used for system notifications
 var notifyInfo = {
@@ -23,12 +26,45 @@ var plumberErrorHandler = { errorHandler: notify.onError({
     })
 };
 
-function cache_version_update() {
-    var cache_version_filename =  __dirname + '/cache_version.txt';
-    var now = new Date();
-    var datestamp = Math.round(now.getTime() / 1000);
+/**
+ *     Hash a set of files and return a manifest object
+ * 
+ *     @param  array    src_files    The files
+ *     
+ *     @return object   The manifest object
+ */
+function hash_files( src_files ) {
 
-    fs.writeFileSync( cache_version_filename, datestamp, function(err, data) {
+    let manifest = {};
+
+    for( let i = 0; i < src_files.length; i++ ) {
+        let regex = /\\|\//g;
+        let file_buffer = fs.readFileSync( __dirname + '/' + src_files[i]);
+        let sum = crypto.createHash('sha256');
+        let filename = src_files[i].split(regex).pop();
+        
+        sum.update(file_buffer);
+
+        manifest[filename] = sum.digest('hex');
+    }
+
+    return manifest;
+}
+
+/**
+ * Build a cache version manifest by 
+ * hashing assets
+ */
+function cache_version_update() {
+    let cache_version_filename =  __dirname + '/asset_cache_manifest.json';
+    let now = new Date();
+    let timestamp = Math.round(now.getTime() / 1000);
+
+    manifest = hash_files( ['assets/js/build/theme/main.min.js', 'assets/js/build/admin/admin.min.js', 'style.css'] );
+
+    let asset_manifest_json = JSON.stringify( manifest );
+
+    fs.writeFileSync( cache_version_filename, asset_manifest_json, function(err, data) {
         if (err) {
             console.log('error writing ' + cache_version_filename + ': ' + err);
         }
@@ -36,7 +72,6 @@ function cache_version_update() {
 
     return gulp.src( cache_version_filename )
     .pipe( gulp.dest( __dirname ) );
-
 }
 
 /**
@@ -102,3 +137,5 @@ function watch() {
 }
 
 exports.default = gulp.series( gulp.parallel( styles, theme_js, admin_js ), cache_version_update, watch );
+exports.build = gulp.series( gulp.parallel( styles, theme_js, admin_js ), cache_version_update );
+exports.build_manifest = gulp.series( cache_version_update );
