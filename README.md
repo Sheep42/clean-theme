@@ -92,7 +92,9 @@ Source scss files are located in `assets/css/scss/`
 Images for css use should be placed in `assets/images/`
 Sass imports are all set up in `assets/css/scss/style.scss`
 
+
 Jump to more info on [JS](#js)
+
 Jump to more info on [Sass](#sass)
 
 # Included Technologies
