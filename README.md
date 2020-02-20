@@ -1,5 +1,6 @@
 
 
+
 # WordPress Clean Theme
 
 **TL;DR:** This is a stripped down WordPress theme created for custom theme developers to use as a starting point. This is the theme I use for my own side projects. I've tried to take a minimalist approach while including some [convenience functions](#convenience--utility) and [libraries](#included-technologies) that I like to use. [Getting Started](#getting-started) should give you enough of an overview to get going if you don't want to read all of the details.
@@ -114,8 +115,39 @@ The minified slick slider JS is included in this theme. Slick is loaded by defau
 
 
 # Build System
+
 ### Gulp
 The theme uses [gulp 4](https://gulpjs.com/) as the core build system, because gulp is what I am familiar with and what I like to use. I've tried to keep the system as simple and non-pervasive as possible, so you are free to replace it with your own preferred system if you are unfamiliar or prefer not to use gulp.
+
+##### Gulp Commands
+
+    default: 'gulp'
+	    Builds assets in dev mode (generates sourcemaps)
+	    Generates asset caching manifest
+	    Initializes browser sync
+	    Watches JS and Scss files
+		    Recompiles, rebuilds manifest, 
+		    and reloads browser on change
+	    Watches php files
+		    Reloads browser on change
+		    
+    build: 'gulp build'
+	    Builds assets in dev mode (generates sourcemaps)
+	    Generates asset caching manifest
+	    
+    build_manifest: 'gulp build_manifest'
+	    Generates asset caching manifest from 
+	    existing build files
+
+##### Gulp Options
+	--production: 'gulp build --production'
+		Ensures sourcemaps are not generated 
+		or enabled for build files
+
+### npm scripts
+	npm start: Runs 'gulp' - default above
+	npm run-script build: Runs 'gulp build --production'
+	npm run-script build-dev: Rund 'gulp build' 
 
 #### Browser-Sync
 Browser-sync is included and enabled by default. If you are unaware, browser-sync is a tool which will watch specified files and automatically reload your browser when changes are made. To make it work, you'll need to open up the theme's `gulpfile.js` and modify the `watch` task.
@@ -170,7 +202,7 @@ The basic sass structure is as follows:
     └── style.scss ─ Imports, this is the file which is eventually compiled and minified
 	
 #### JS
-In general `.js` files will be minified and transpiled by babel. 
+In general `.js` files will be minified and transpiled. 
 Babel and minify are configured to skip `.min.js` files. 
 
 JavaScript files in this theme are broken out into 3 main directories. 
@@ -203,7 +235,26 @@ The build system is configured to generate sourcemaps for both CSS and JS.
 CSS sourcemaps are output to `assets/css/maps/`
 JS sourcemaps are output to `assets/js/build/maps/`
 
-You can disable sourcemaps by removing the calls to `sourcemaps` from the gulp tasks `admin-js` and `theme-js` inside of `gulpfile.js`.
+You can disable sourcemaps by running `gulp --production`, `gulp build --production`, `npm build`, or by removing the sourcemaps calls from gulpfile.js.
+
+#### Asset Caching
+This theme takes advantage of WordPress' asset caching with some help from the build system.
+
+The build system generates a file called `asset_cache_manifest.json` in the theme root. This file contains json mapping final built asset files to a sha256 value created by hashing the file contents.
+
+You can retrieve the value from this file in the theme by calling `_cleanhmeme_get_cache_version( $filename )` where `$filename` is the name of the file you need to get a caching value for.
+
+An example of this system in use ships with the theme to enqueue style.css and main.min.js:
+
+	// Theme base stylesheet.
+	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri(), array(), _cleanhmeme_get_cache_version( 'style.css' ) );
+
+	// enqueue main.min.js
+	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/theme/main.min.js' ), array( 'jquery' ), _cleanhmeme_get_cache_version( 'main.min.js' ), true ); 
+
+**When WP_DEBUG is set to true, asset caching will always be busted.**
+
+It's worth noting that `_cleanhmeme_get_cache_version` uses wp_cache_set / wp_cache_get to avoid reading the file multiple times in a row . 
 
 # Convenience & Utility 
 
