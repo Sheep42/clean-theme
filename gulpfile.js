@@ -79,7 +79,10 @@ function cache_version_update() {
 /**
  *  compile scripts with sourcemaps
  *  
- *  @return {[type]} [description]
+ *  @param  array   src_files   The source files to compile   
+ *  @param  string  prefix      The prefix to be appended to the .min.js file  
+ *  @param  string  dest        The destination directory ( inside of ./assets/js/build ) 
+ *  
  */
 function build_scripts_dev( src_files, prefix, dest ) {
     return gulp.src( src_files )

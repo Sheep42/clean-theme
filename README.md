@@ -1,26 +1,26 @@
-
-
-
 # WordPress Clean Theme
 
 **TL;DR:** This is a stripped down WordPress theme created for custom theme developers to use as a starting point. This is the theme I use for my own side projects. I've tried to take a minimalist approach while including some [convenience functions](#convenience--utility) and [libraries](#included-technologies) that I like to use. [Getting Started](#getting-started) should give you enough of an overview to get going if you don't want to read all of the details.
 
 # What This is Not
-
 - No pre-defined custom fields! No custom post types! No post formats! No content builders! 100% Freedom to build whatever you need!
 
 - This theme will **not** suit your existing WordPress website with no coding and no custom development, unless you are going for the [Stallman](https://stallman.org/) approach, and even then you'll need to do *some* styling. :)
 
 - This theme comes with very little markup, the bare minimum in class names (mostly based on WP default themes) and almost no pre-defined styles. This is by design, so you can build on top of the skeleton that exists.
 
-- You'll find very little convention forced upon you, outside of the build system, and I have set that up to be isolated, so you can throw it away and use something else if you'd like.
+- This is not meant to be an accessibility or internationalization starter. There are some cases where I have left in textdomains and / or aria tags, it's up to you to build out the theme to suit your needs.
+
+- You'll find very little convention forced upon you, outside of the build system, and I have set that up to be relatively isolated, so you can throw it away and use something else if you'd like.
 
 # Why Is It Useful?
 - Saves setup time if you are working on many projects and find yourself frequently duplicating existing themes or stripping down WP TwentyX
 
-- Offers a (hopefully) clean starting point to be expanded in any way needed while offering an existing template structure, asset build system, and some convenience functions.
+- Offers a simple starting point to be expanded in any way needed with an existing template structure, asset build system, and some convenience functions.
 
 - Includes a [JS slider and the Bootstrap library](#included-technologies) for you to use or discard at your own discretion.
+
+- Easy to read, use, and build upon. 
 
 - Free and open source
 
