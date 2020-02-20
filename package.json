@@ -18,8 +18,9 @@
     "gulp-sourcemaps": "^2.6.1"
   },
   "scripts": {
-    "postinstall": "find node_modules/ -name '*.info' -type f -delete",
-    "start": "gulp"
+    "start": "gulp",
+    "build": "gulp build --production",
+    "build-dev": "gulp build"
   },
   "author": "Dan Shedd"
 }

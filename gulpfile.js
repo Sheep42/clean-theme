@@ -26,6 +26,8 @@ var plumberErrorHandler = { errorHandler: notify.onError({
     })
 };
 
+var is_prod = ( argv.production === undefined ) ? false : true;
+
 /**
  *     Hash a set of files and return a manifest object
  * 
@@ -75,14 +77,11 @@ function cache_version_update() {
 }
 
 /**
- *  compile scripts
+ *  compile scripts with sourcemaps
  *  
- *  @param  array   src_files   The source files to compile   
- *  @param  string  prefix      The prefix to be appended to the .min.js file  
- *  @param  string  dest        The destination directory ( inside of ./assets/js/build ) 
- *  
+ *  @return {[type]} [description]
  */
-function build_scripts( src_files, prefix, dest ) {
+function build_scripts_dev( src_files, prefix, dest ) {
     return gulp.src( src_files )
             .pipe(plumber())
             .pipe(sourcemaps.init())
@@ -103,13 +102,63 @@ function build_scripts( src_files, prefix, dest ) {
             .pipe(gulp.dest( './assets/js/build/' + dest ));
 }
 
+/**
+ *  compile scripts
+ *  
+ *  @param  array   src_files   The source files to compile   
+ *  @param  string  prefix      The prefix to be appended to the .min.js file  
+ *  @param  string  dest        The destination directory ( inside of ./assets/js/build ) 
+ *  
+ */
+function build_scripts( src_files, prefix, dest ) {
+
+    if( false === is_prod )
+        return build_scripts_dev( src_files, prefix, dest );
+
+    return gulp.src( src_files )
+            .pipe(plumber())
+            .pipe(babel({
+                presets: ['@babel/env'],
+                ignore: ['**/*.min.js']
+            }))
+            .pipe(minify({
+                ext: {
+                    src : '.js',
+                    min : '.min.js'
+                },
+                noSource: true,
+                ignoreFiles : ['**/*.min.js']
+            }))
+            .pipe(concat( prefix + '.min.js' ))
+            .pipe(gulp.dest( './assets/js/build/' + dest ));
+}
+
+/**
+ * compile styles with sourcemaps
+ */
+function styles_dev() {
+    return gulp.src('./assets/css/scss/style.scss')
+            .pipe(plumber(plumberErrorHandler))
+            .pipe(sourcemaps.init())
+            .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+            .pipe(autoprefixer())
+            .pipe(sourcemaps.write('./assets/css/maps'))
+            .pipe(gulp.dest('.'))
+            .pipe(browserSync.reload({stream:true}));
+}
+
+/**
+ *  compile styles
+ */
 function styles() {
+
+    if( false === is_prod )
+        return styles_dev();
+
     return gulp.src('./assets/css/scss/style.scss')
                 .pipe(plumber(plumberErrorHandler))
-                .pipe(sourcemaps.init())
                 .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
                 .pipe(autoprefixer())
-                .pipe(sourcemaps.write('./assets/css/maps'))
                 .pipe(gulp.dest('.'))
                 .pipe(browserSync.reload({stream:true}));
 }
