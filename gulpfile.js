@@ -59,8 +59,6 @@ function hash_files( src_files ) {
  */
 function cache_version_update() {
     let cache_version_filename =  __dirname + '/asset_cache_manifest.json';
-    let now = new Date();
-    let timestamp = Math.round(now.getTime() / 1000);
 
     manifest = hash_files( ['assets/js/build/theme/main.min.js', 'assets/js/build/admin/admin.min.js', 'style.css'] );
 
