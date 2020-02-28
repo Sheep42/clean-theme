@@ -4,48 +4,6 @@ function cleantheme_init() {
 
 	// Example simple post type registration
 	// cleantheme_register_post_type( 'Book', 'Books', 'book', 5, 'book-listing' );
-	
-	/**
-	** 	Render a virtual page
-	** 
-	**  This is useful if you need to create a url
-	**  outside of the context of WordPress which has to
-	**  render content. 
-	** 
-	**  For example, a dynamically generated pdf download 
-	**  located at https://example.com/my-pdf?first_name=John&last_name=Smith
-	**  
-	**  To use this, uncomment below and replace 'virtual-page-slug' with
-	**  your own page slug.
-	
-		function cleantheme_query_vars( $query_vars ) {
-			$query_vars[] = 'virtual-page-slug';
-			
-		    return $query_vars;
-		}
-		add_filter( 'query_vars', 'cleantheme_query_vars' );
-
-		function cleantheme_template_redirect() {
-			global $wp_query;
-
-		    if ( array_key_exists( 'virtual-page-slug', $wp_query->query_vars ) ) {
-		        
-	            // Render the page contents
-	            // Ex: __cleantheme_render_virtual_page(); 
-	           	// get_template_part( 'template-parts/page/content', 'virtual' );
-		        
-		        // must end with a call to exit
-		        exit;
-			}
-			
-		    return;
-		}
-		add_action( 'template_redirect', 'cleantheme_template_redirect' );
-
-		add_rewrite_rule( 'virtual-page-slug$', 'index.php?virtual-page-slug=1', 'top' );
-
-	**
-	**/
 
 }
 add_action( 'init', 'cleantheme_init' );

@@ -296,15 +296,6 @@ This is **not** meant to be a replacement for `register_post_type()`. Simply a f
 
 See the documentation inside of functions.php for usage information.
 
-##### Virtual Page Creation
-This is a collection of hooks, commented out by default, inside of the theme function which hooks `init`. 
-
-These functions will create a rewrite rule inside of WordPress to handle a url that would otherwise generate a 404, allowing you to actually render content at that url.
-
-This is useful if you need to create a url outside of the context of WordPress which has to render content. For example, a dynamically generated pdf download located at https://example.com/my-pdf?first_name=John&last_name=Smith
-
-Another example is if you want to create a custom listing page without requiring someone to create a WordPress page using a custom template.
-
 ### admin.js
 ##### Page Template Admin Body Class
 The only JavaScript included in admin.js out of the box is a small snippet of jQuery which will append a body class of `template-template-slug.php` when adding / editing a page. The body class will update when the dropdown is changed.
