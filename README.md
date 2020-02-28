@@ -146,10 +146,25 @@ The theme uses [gulp 4](https://gulpjs.com/) as the core build system, because g
 		Ensures sourcemaps are not generated 
 		or enabled for build files
 
+		Default: False
+		Type: Boolean
+
+	--browser-sync: 
+		'gulp --browser-sync'
+			Initializes and runs browser-sync when watching files. 
+			Same as running 'gulp' with no options
+
+		'gulp --no-browser-sync'
+			Disables browser-sync, and just watches / builds js & scss files
+
+		Default: True
+		Type: Boolean
+
 ### npm scripts
 	npm start: Runs 'gulp' - default above
-	npm run-script build: Runs 'gulp build --production'
-	npm run-script build-dev: Rund 'gulp build' 
+	npm run build: Runs 'gulp build --production'
+	npm run build-dev: Runs 'gulp build'
+	npm run no-browser-sync: Runs 'gulp --no-browser-sync'  
 
 #### Browser-Sync
 Browser-sync is included and enabled by default. If you are unaware, browser-sync is a tool which will watch specified files and automatically reload your browser when changes are made. To make it work, you'll need to open up the theme's `gulpfile.js` and modify the `watch` task.
@@ -158,17 +173,11 @@ Inside of the `browserSync.init()` options, you'll need to modify the line that 
 
 #### I don't want to use browser-sync
 
-If you do not have a local environment, or prefer not to use browser-sync you can comment or remove the entire browser-sync init call from `gulpfile.js`:
+If you do not have a local environment, or prefer not to use browser-sync, then you don't have to!
 
-    browserSync.init({
-        files: ['template-parts/**/*.php', '*.php'],
-        proxy: "clean-theme.local",
-        snippetOptions: {
-          whitelist: ['/wp-admin/admin-ajax.php'],
-          blacklist: ['/wp-admin/**']
-        }
-    });
-You should also remove any calls to `browserSync.reload`.
+You can use `npm run no-browser-sync` or `gulp --no-browser-sync` and the system will function as outlined, but without browser-sync. 
+
+If you plan to never use browser-sync, you can modify `package.json` in the theme root so that the `npm start` script runs gulp with the no-browser-sync flag. 
 
 #### Sass
 This theme exclusively uses [Sass](https://sass-lang.com/) for styling and comes with . However, you can deviate from the file structure if it doesn't suit your needs.
