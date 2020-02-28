@@ -258,19 +258,19 @@ This theme takes advantage of WordPress' asset caching with some help from the b
 
 The build system generates a file called `asset_cache_manifest.json` in the theme root. This file contains json mapping final built asset files to a sha256 value created by hashing the file contents.
 
-You can retrieve the value from this file in the theme by calling `_cleanhmeme_get_cache_version( $filename )` where `$filename` is the name of the file you need to get a caching value for.
+You can retrieve the value from this file in the theme by calling `_cleantheme_get_cache_version( $filename )` where `$filename` is the name of the file you need to get a caching value for.
 
 An example of this system in use ships with the theme to enqueue style.css and main.min.js:
 
 	// Theme base stylesheet.
-	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri(), array(), _cleanhmeme_get_cache_version( 'style.css' ) );
+	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri(), array(), _cleantheme_get_cache_version( 'style.css' ) );
 
 	// enqueue main.min.js
-	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/theme/main.min.js' ), array( 'jquery' ), _cleanhmeme_get_cache_version( 'main.min.js' ), true ); 
+	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/theme/main.min.js' ), array( 'jquery' ), _cleantheme_get_cache_version( 'main.min.js' ), true ); 
 
 **When WP_DEBUG is set to true, asset caching will always be busted.**
 
-It's worth noting that `_cleanhmeme_get_cache_version` uses wp_cache_set / wp_cache_get to avoid reading the manifest file multiple times in a row within the same page load. 
+It's worth noting that `_cleantheme_get_cache_version` uses wp_cache_set / wp_cache_get to avoid reading the manifest file multiple times in a row within the same page load. 
 
 # Convenience & Utility 
 

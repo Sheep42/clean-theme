@@ -240,10 +240,10 @@ function cleantheme_enqueue_scripts() {
 	wp_enqueue_style( 'cleantheme-fonts', cleantheme_google_fonts_url(), array(), null );
 
 	// Theme base stylesheet.
-	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri(), array(), _cleanhmeme_get_cache_version( 'style.css' ) );
+	wp_enqueue_style( 'cleantheme-style', get_stylesheet_uri(), array(), _cleantheme_get_cache_version( 'style.css' ) );
 
 	// enqueue main.min.js
-	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/theme/main.min.js' ), array( 'jquery' ), _cleanhmeme_get_cache_version( 'main.min.js' ), true );
+	wp_enqueue_script( 'cleantheme-main-scripts', get_theme_file_uri( '/assets/js/build/theme/main.min.js' ), array( 'jquery' ), _cleantheme_get_cache_version( 'main.min.js' ), true );
 
 	/**
 	 *  Move scripts to the footer
@@ -280,7 +280,7 @@ add_action( 'admin_enqueue_scripts', 'cleantheme_admin_enqueue_scripts' );
  *
  * @return The caching version of the file
  */
-function _cleanhmeme_get_cache_version( $filename ) {
+function _cleantheme_get_cache_version( $filename ) {
 
 	$found = false;
 	$cache_version = null;
