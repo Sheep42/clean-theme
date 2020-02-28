@@ -101,7 +101,7 @@ Jump to more info on [Sass](#sass)
 
 ### Bootstrap
 	
-##### Version: 4.3.1
+##### Version: 4.4.1
 [Bootstrap Documentation](https://getbootstrap.com/docs/)
 
 The Bootstrap scss is included in this theme for you to use and modify. By default, the theme does not import any of the bootstrap css. This is by design, it's up to you to import the stylesheets that you want or need from the bootstrap library. See the [Sass section](#sass) for more details.
