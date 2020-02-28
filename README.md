@@ -180,7 +180,7 @@ You can use `npm run no-browser-sync` or `gulp --no-browser-sync` and the system
 If you plan to never use browser-sync, you can modify `package.json` in the theme root so that the `npm start` script runs gulp with the no-browser-sync flag. 
 
 #### Sass
-This theme exclusively uses [Sass](https://sass-lang.com/) for styling and comes with . However, you can deviate from the file structure if it doesn't suit your needs.
+This theme exclusively uses [Sass](https://sass-lang.com/) for styling and comes with a predefined file structure. However, you can deviate from the file structure if it doesn't suit your needs.
 
 Imports are set up inside of  `_style.scss`. The Bootstrap library is included, but the import is commented out by default. If you want to use all of Bootstrap, you can simply uncomment the line and get going, but you can also import only the specific parts that you would like to use.
 
@@ -191,6 +191,8 @@ The basic sass structure is as follows:
     │   ├── _forms.scss ─ Form base styles
     │   └── _general.scss ─ General base styles (h1-h6, p, table, lists, etc)
     ├── content
+    │   ├── _archive.scss ─ General archive styles
+    │   ├── _single.scss ─ General single styles
     │   ├── _page.scss ─ Default page template content styles
     │   └── _front-page.scss ─ Front page template content styles
     ├── global                     
@@ -200,6 +202,7 @@ The basic sass structure is as follows:
     │   └── _sidebar.scss ─ Sidebar content styles
     ├── utility                
     │   ├── _classes.scss ─ Commonly used classes
+    │   ├── _extends.scss ─ General purpose extends
     │   └── _mixins.scss ─ Mixins for commonly used style patterns
     ├── variables              
     │   ├── _breakpoints.scss ─ Breakpoint variables      
@@ -211,6 +214,8 @@ The basic sass structure is as follows:
     │   │   ├── ... ─ bootstrap's full scss library
     │   └── _reset.scss ─ Eric Meyer reset.css
     └── style.scss ─ Imports, this is the file which is eventually compiled and minified
+
+Additional page template & post type scss files can be added under the `content` directory, and the `vendor` directory can be used to import additional 3rd party sass libraries.
 	
 #### JS
 In general `.js` files will be minified and transpiled. 
@@ -265,7 +270,7 @@ An example of this system in use ships with the theme to enqueue style.css and m
 
 **When WP_DEBUG is set to true, asset caching will always be busted.**
 
-It's worth noting that `_cleanhmeme_get_cache_version` uses wp_cache_set / wp_cache_get to avoid reading the file multiple times in a row . 
+It's worth noting that `_cleanhmeme_get_cache_version` uses wp_cache_set / wp_cache_get to avoid reading the manifest file multiple times in a row within the same page load. 
 
 # Convenience & Utility 
 

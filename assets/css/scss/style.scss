@@ -18,6 +18,7 @@ $theme: "/wp-content/themes/clean-theme";
 
 //	Mixins & Utility Classes
 @import "utility/mixins";
+@import "utility/extends";
 @import "utility/classes";
 
 // Css Reset
@@ -38,6 +39,8 @@ $theme: "/wp-content/themes/clean-theme";
 // @import "vendor/bootstrap/bootstrap";
 
 // Content
+@import "content/archive";
+@import "content/single";
 @import "content/page";
 @import "content/front-page";
 // @import "content/new-page-template";
