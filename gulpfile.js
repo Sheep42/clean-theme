@@ -10,7 +10,16 @@ const   gulp        = require('gulp'),
         concat      = require('gulp-concat'),
         fs          = require('fs'),
         crypto      = require('crypto'),
-        argv        = require('yargs').argv,
+        argv        = require('yargs').options({
+            'production': {
+                default: false,
+                type: 'boolean'
+            },
+            'browser-sync': {
+                default: true,
+                type: 'boolean'
+            } 
+        }).argv,
         shasum      = crypto.createHash('sha256');
 
 // Title used for system notifications
@@ -25,8 +34,6 @@ var plumberErrorHandler = { errorHandler: notify.onError({
         message: "Error: <%= error.message %>"
     })
 };
-
-var is_prod = ( argv.production === undefined ) ? false : true;
 
 /**
  *     Hash a set of files and return a manifest object
@@ -113,7 +120,7 @@ function build_scripts_dev( src_files, prefix, dest ) {
  */
 function build_scripts( src_files, prefix, dest ) {
 
-    if( false === is_prod )
+    if( false === argv.production )
         return build_scripts_dev( src_files, prefix, dest );
 
     return gulp.src( src_files )
@@ -153,7 +160,7 @@ function styles_dev() {
  */
 function styles() {
 
-    if( false === is_prod )
+    if( false === argv.production )
         return styles_dev();
 
     return gulp.src('./assets/css/scss/style.scss')
@@ -173,17 +180,23 @@ function theme_js() {
 }
 
 function watch() {
-    browserSync.init({
-        files: ['template-parts/**/*.php', '*.php'],
-        proxy: "clean-theme.local",
-        snippetOptions: {
-          whitelist: ['/wp-admin/admin-ajax.php'],
-          blacklist: ['/wp-admin/**']
-        }
-    });
-    
-    gulp.watch(['./assets/css/scss/**/*.scss'], gulp.series( styles, cache_version_update )).on('change', browserSync.reload);
-    gulp.watch(['./assets/js/src/**/*.js'], gulp.series( gulp.parallel( theme_js, admin_js ), cache_version_update )).on('change', browserSync.reload);
+
+    if( true === argv.browserSync ) { 
+        browserSync.init({
+            files: ['template-parts/**/*.php', '*.php'],
+            proxy: "clean-theme.local",
+            snippetOptions: {
+              whitelist: ['/wp-admin/admin-ajax.php'],
+              blacklist: ['/wp-admin/**']
+            }
+        });
+        
+        gulp.watch(['./assets/css/scss/**/*.scss'], gulp.series( styles, cache_version_update )).on('change', browserSync.reload);
+        gulp.watch(['./assets/js/src/**/*.js'], gulp.series( gulp.parallel( theme_js, admin_js ), cache_version_update )).on('change', browserSync.reload);
+    } else {
+        gulp.watch(['./assets/css/scss/**/*.scss'], gulp.series( styles, cache_version_update ));
+        gulp.watch(['./assets/js/src/**/*.js'], gulp.series( gulp.parallel( theme_js, admin_js ), cache_version_update ));
+    }
 }
 
 exports.default = gulp.series( gulp.parallel( styles, theme_js, admin_js ), cache_version_update, watch );
