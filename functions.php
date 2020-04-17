@@ -223,8 +223,6 @@ add_filter( 'excerpt_more', 'cleantheme_excerpt_more' );
  * Handles JavaScript detection.
  *
  * Adds a `js` class to the root `<html>` element when JavaScript is detected.
- *
- * @since cleantheme 1.0
  */
 function cleantheme_javascript_detection() {
 	echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
@@ -326,8 +324,6 @@ function _cleantheme_get_cache_version( $filename ) {
 /**
  * Use front-page.php when Front page displays is set to a static page.
  *
- * @since cleantheme 1.0
- *
  * @param string $template front-page.php.
  *
  * @return string The template to be used: blank if is_home() is true (defaults to index.php), else $template.
@@ -340,8 +336,6 @@ add_filter( 'frontpage_template',  'cleantheme_front_page_template' );
 /**
  * Modifies tag cloud widget arguments to display all tags in the same font size
  * and use list format for better accessibility.
- *
- * @since cleantheme 1.4
  *
  * @param array $args Arguments for tag cloud widget.
  * @return array The filtered arguments for tag cloud widget.
@@ -363,6 +357,7 @@ function cleantheme_is_frontpage() {
 	return ( is_front_page() && ! is_home() );
 }
 
+/** Safe checking, no matter your version of WP */
 function cleantheme_doing_ajax() {
 	return function_exists('wp_doing_ajax') ? wp_doing_ajax() : (defined('DOING_AJAX') && DOING_AJAX);
 }

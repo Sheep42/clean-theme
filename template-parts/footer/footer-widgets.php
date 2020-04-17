@@ -1,10 +1,6 @@
 <?php
 /**
  * Displays footer widgets if assigned
- *
- * @subpackage cleantheme
- * @since 1.0
- * @version 1.0
  */
 
 ?>
