@@ -10,6 +10,7 @@ const   gulp        = require('gulp'),
         concat      = require('gulp-concat'),
         fs          = require('fs'),
         crypto      = require('crypto'),
+        replace     = require('gulp-replace'),
         argv        = require('yargs').options({
             'production': {
                 default: false,
@@ -18,7 +19,13 @@ const   gulp        = require('gulp'),
             'browser-sync': {
                 default: true,
                 type: 'boolean'
-            } 
+            },
+            'replace-with': {
+                type: 'string'
+            },
+            'find': {
+                type: 'string'
+            }
         }).argv,
         shasum      = crypto.createHash('sha256');
 
@@ -179,6 +186,18 @@ function theme_js() {
     return build_scripts( ['./assets/js/src/theme/**/*.js', './assets/js/src/vendor/**/*.js'], 'main', 'theme' );
 }
 
+function find_and_replace() {
+
+    if( undefined == argv.replaceWith || '' == argv.replaceWith )
+        return false;
+
+    let find = ( undefined != argv.find && '' != argv.find ) ? argv.find : /cleantheme|clean-theme|Clean-Theme/g;
+
+    return gulp.src(['**', '!./node_modules/**', '!./.git/**', '!./gulpfile.js'], { base: './' })
+            .pipe(replace( find, argv.replaceWith ))
+            .pipe(gulp.dest('./'));
+}
+
 function watch() {
 
     if( true === argv.browserSync ) { 
@@ -202,3 +221,4 @@ function watch() {
 exports.default = gulp.series( gulp.parallel( styles, theme_js, admin_js ), cache_version_update, watch );
 exports.build = gulp.series( gulp.parallel( styles, theme_js, admin_js ), cache_version_update );
 exports.build_manifest = gulp.series( cache_version_update );
+exports.find_and_replace = gulp.series( find_and_replace );
