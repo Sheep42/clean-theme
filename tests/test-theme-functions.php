@@ -2,11 +2,6 @@
 
 class TestThemeFunctions extends WP_UnitTestCase {
 
-	function tearDown() {
-		$this->remove_added_uploads();
-		parent::tearDown();
-	}
-
 	function test_theme_enabled() {
 		
 		$this->assertTrue( 
