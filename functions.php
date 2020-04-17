@@ -285,7 +285,7 @@ function _cleantheme_get_cache_version( $filename ) {
 	$found = false;
 	$cache_version = null;
 
-	if ( defined('WP_DEBUG') && WP_DEBUG ) {
+	if ( (defined('WP_DEBUG') && WP_DEBUG) && !defined('ALWAYS_CACHE') ) {
 		// always bust cache when WP_DEBUG is turned on 
 		$cache_version = wp_cache_get( 'cache_version', 'cleantheme', false, $found );
 
