@@ -22,7 +22,8 @@
     "start": "gulp",
     "build": "gulp build --production",
     "build-dev": "gulp build",
-    "no-browser-sync": "gulp --no-browser-sync"
+    "no-browser-sync": "gulp --no-browser-sync",
+	"replace": "gulp find_and_replace"
   },
   "author": "Dan Shedd"
 }

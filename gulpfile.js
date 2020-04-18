@@ -188,8 +188,10 @@ function theme_js() {
 
 function find_and_replace() {
 
-    if( undefined == argv.replaceWith || '' == argv.replaceWith )
+    if( undefined == argv.replaceWith || '' == argv.replaceWith ) {
+        console.error( '--replace-with is required for find_and_replace' );
         return false;
+    }
 
     let find = ( undefined != argv.find && '' != argv.find ) ? argv.find : /cleantheme|clean-theme|Clean-Theme/g;
 
