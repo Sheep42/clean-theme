@@ -2,7 +2,24 @@
 
 **TL;DR:** This is a stripped down WordPress theme created for custom theme developers to use as a starting point. This is the theme I use for my own side projects. I've tried to take a minimalist approach while including some [convenience functions](#convenience--utility) and [libraries](#included-technologies) that I like to use. [Getting Started](#getting-started) should give you enough of an overview to get going if you don't want to read all of the details.
 
-# What This is Not
+# Contents
+
+- [What Isn't This?](#what-isnt-this)
+- [Why Is It Useful?](#why-is-it-useful)
+- [Getting Started](#getting-started)
+	- [Minimum Requirements](#requirements)
+	- [Installing](#instaling)
+	- [Using The Theme](#using-the-theme)
+- [Included Technologies](#included-technologies)
+- [Unit Testing](#unit-testing)
+- [Build System](#build-system)
+	- [Sass](#sass)
+	- [JS](#js)
+	- [Asset Caching](#asset-caching) 
+- [Convenience & Utility](#convenience--utility)
+
+
+# What Isn't This?
 - No pre-defined custom fields! No custom post types! No post formats! No content builders! 100% Freedom to build whatever you need!
 
 - This theme will **not** suit your existing WordPress website with no coding and no custom development, unless you are going for the [Stallman](https://stallman.org/) approach, and even then you'll need to do *some* styling. :)
@@ -24,6 +41,8 @@
 
 - Free and open source
 
+- Includes WP Unit Testing scaffolding and some initial basic tests
+
 # Getting Started
 
 The goal of this theme is to provide an easy to understand and easy to use boilerplate theme for any custom WordPress project. 
@@ -39,9 +58,13 @@ The goal of this theme is to provide an easy to understand and easy to use boile
 ### Installing
 Start by cloning the theme into your local WordPress instance under `wp-content/themes/clean-theme`
 
+If you plan to track your entire WP directory, then move `.gitignore` to the WP root, and remove the `.git` directory from the theme.
+
 If you do not have nodejs installed, you will need to install it. You can find the latest stable version of node here: [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 
 Once you have cloned the theme and installed nodejs, use the command line to run `npm install && npm start` from the theme directory. This will install the build system dependencies and run gulp. If you would like to use browser-sync, read the [section](#browser-sync) below.
+
+Optionally, in a new console within the theme directory, run `gulp find_and_replace --replace-with="my_theme"` to replace all instances of "cleantheme", "Clean-Theme", and "clean-theme" with "my_theme" where my_theme should be your desired theme name. Then manually change the theme folder name, if desired.
 
 ### Using The Theme
 I have tried to keep this theme as simple as possible, but I have added in some convenience functions and pulled in some concepts from the WP default themes. I have also defined a default template structure, which you may deviate from if it hinders you. Personally, I like to set up my projects this way, so that's why it is the way that it is.
@@ -115,6 +138,27 @@ The minified bootstrap JS is also included in this theme. The bootstrap JS is lo
 
 The minified slick slider JS is included in this theme. Slick is loaded by default and ready to use. To learn more about how vendor JS is imported into the theme, take a look at the JS section.
 
+# Unit Testing
+
+The theme ships with the WP theme unit testing scaffolding in place, as well as a small handful of existing tests for you to reference in building your own. 
+
+The unit test setup script created by WP is not Windows friendly, so if you are going to be using Windows as your main development environment I would recommend using [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to do your phpunit testing.
+
+The following steps should get you up and running:
+
+1. Install [PHPUnit](https://github.com/sebastianbergmann/phpunit#installation)
+
+2. From the terminal, inside of the theme directory, run `bash bin/install-wp-tests.sh <db_name> <db_user> <db_pass> [db_host] [wp_version] [skip_db_creation]`
+
+	- Substitute your db info into this command
+
+	- wp_version can be `latest` if you are using the latest version
+
+	- If your db exists, you should specify `true` for skip_db_creation, otherwise it will default to false and try to create a database.
+
+3. Assuming no errors in step 2, run `phpunit` inside of the theme directory. You should see the PHPUnit output after a few seconds.
+
+More information can be found in the [WordPress Developer Documentation](https://developer.wordpress.org/cli/commands/scaffold/theme-tests/).
 
 # Build System
 
@@ -132,39 +176,51 @@ The theme uses [gulp 4](https://gulpjs.com/) as the core build system, because g
 		    and reloads browser on change
 	    Watches php files
 		    Reloads browser on change
+            
+        --browser-sync: 
+          'gulp --browser-sync'
+              Initializes and runs browser-sync when watching files. 
+              Same as running 'gulp' with no options
+
+          'gulp --no-browser-sync'
+              Disables browser-sync, and just watches / builds js & scss files
+
+		Default: True
+		Type: Boolean
 		    
     build: 'gulp build'
 	    Builds assets in dev mode (generates sourcemaps)
 	    Generates asset caching manifest
+
+	    --production: 'gulp build --production'
+			Ensures sourcemaps are not generated 
+			or enabled for build files
+
+			Default: False
+			Type: Boolean
 	    
     build_manifest: 'gulp build_manifest'
 	    Generates asset caching manifest from 
 	    existing build files
 
-##### Gulp Options
-	--production: 'gulp build --production'
-		Ensures sourcemaps are not generated 
-		or enabled for build files
+	find_and_replace: 'gulp find_and_replace --find="" --replace-with=""'
+		Convenience task to find and replace a string across project files.
+        
+        --find: A string to find across all files
+        	Default: If not specified find_and_replace finds all 
+            occurrences of "cleantheme", "Clean-Theme", and "clean-theme".
+            
+        --replace-with: A string to replace all matches with
+        	Default: ""
+            Required: True
 
-		Default: False
-		Type: Boolean
-
-	--browser-sync: 
-		'gulp --browser-sync'
-			Initializes and runs browser-sync when watching files. 
-			Same as running 'gulp' with no options
-
-		'gulp --no-browser-sync'
-			Disables browser-sync, and just watches / builds js & scss files
-
-		Default: True
-		Type: Boolean
 
 ### npm scripts
 	npm start: Runs 'gulp' - default above
 	npm run build: Runs 'gulp build --production'
 	npm run build-dev: Runs 'gulp build'
 	npm run no-browser-sync: Runs 'gulp --no-browser-sync'  
+    npm run replace: Runs 'gulp find_and_replace'
 
 #### Browser-Sync
 Browser-sync is included and enabled by default. If you are unaware, browser-sync is a tool which will watch specified files and automatically reload your browser when changes are made. To make it work, you'll need to open up the theme's `gulpfile.js` and modify the `watch` task.
