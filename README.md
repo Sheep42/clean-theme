@@ -148,7 +148,9 @@ The following steps should get you up and running:
 
 1. Install [PHPUnit](https://github.com/sebastianbergmann/phpunit#installation)
 
-2. From the terminal, inside of the theme directory, run `bash bin/install-wp-tests.sh <db_name> <db_user> <db_pass> [db_host] [wp_version] [skip_db_creation]`
+2. Install [Subversion](https://subversion.apache.org/), if you don't already have it
+
+3. From the terminal, inside of the theme directory, run `bash bin/install-wp-tests.sh <db_name> <db_user> <db_pass> [db_host] [wp_version] [skip_db_creation]`
 
 	- Substitute your db info into this command
 
@@ -156,7 +158,7 @@ The following steps should get you up and running:
 
 	- If your db exists, you should specify `true` for skip_db_creation, otherwise it will default to false and try to create a database.
 
-3. Assuming no errors in step 2, run `phpunit` inside of the theme directory. You should see the PHPUnit output after a few seconds.
+4. Assuming no errors in step 2, run `phpunit` inside of the theme directory. You should see the PHPUnit output after a few seconds.
 
 More information can be found in the [WordPress Developer Documentation](https://developer.wordpress.org/cli/commands/scaffold/theme-tests/).
 
