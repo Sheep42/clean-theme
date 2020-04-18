@@ -8,7 +8,7 @@
 - [Why Is It Useful?](#why-is-it-useful)
 - [Getting Started](#getting-started)
 	- [Minimum Requirements](#requirements)
-	- [Installing](#instaling)
+	- [Installing](#installing)
 	- [Using The Theme](#using-the-theme)
 - [Included Technologies](#included-technologies)
 - [Unit Testing](#unit-testing)
