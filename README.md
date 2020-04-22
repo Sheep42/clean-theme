@@ -45,7 +45,7 @@
 
 # Getting Started
 
-The goal of this theme is to provide an easy to understand and easy to use boilerplate theme for any custom WordPress project. 
+The goal of this theme is to provide an easy to understand and easy to use boilerplate theme for any custom WordPress project. I encourage you to fork this repository and make it into something more specific to your needs, if you feel that you will be using it regularly.
 
 ### Requirements
 
