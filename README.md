@@ -152,11 +152,11 @@ The following steps should get you up and running:
 
 3. From the terminal, inside of the theme directory, run `bash bin/install-wp-tests.sh <db_name> <db_user> <db_pass> [db_host] [wp_version] [skip_db_creation]`
 
-	- Substitute your db info into this command
-
 	- wp_version can be `latest` if you are using the latest version
 
-	- If your db exists, you should specify `true` for skip_db_creation, otherwise it will default to false and try to create a database.
+	- DO NOT use the same database as your WP install, create a new database for testing, or let the command do it for you.
+
+	- If your db exists, you should substitute your db info into this command, and specify `true` for skip_db_creation, otherwise it will default to false and try to create a database.
 
 4. Assuming no errors in step 2, run `phpunit` inside of the theme directory. You should see the PHPUnit output after a few seconds.
 
