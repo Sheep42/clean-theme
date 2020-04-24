@@ -5,6 +5,8 @@ function cleantheme_init() {
 	// Example simple post type registration
 	// cleantheme_register_post_type( 'Book', 'Books', 'book', 5, 'book-listing' );
 
+	_cleantheme_register_mocha();
+
 }
 add_action( 'init', 'cleantheme_init' );
 
@@ -12,6 +14,48 @@ function cleantheme_admin_init() {
 
 }
 add_action( 'admin_init', 'cleantheme_admin_init' );
+
+function _cleantheme_register_mocha() {
+
+	if( cleantheme_authenticate_test_user() ) {
+
+		function cleantheme_query_vars( $query_vars ) {
+
+			$query_vars[] = 'mocha_run';
+			
+		    return $query_vars;
+
+		}
+		add_filter( 'query_vars', 'cleantheme_query_vars' );
+
+		function cleantheme_template_redirect() {
+			global $wp_query;
+
+		    if( array_key_exists( 'mocha_run', $wp_query->query_vars ) ) {
+				__cleantheme_mocha_test_page();
+				exit;
+			}
+			
+		    return;
+		}
+		add_action( 'template_redirect', 'cleantheme_template_redirect' );
+
+		add_rewrite_rule( 'mocha$', 'index.php?mocha_run=1', 'top' );
+	}
+	
+}
+
+function cleantheme_authenticate_test_user() {
+
+	return (defined('ENABLE_MOCHA') && ENABLE_MOCHA) && is_user_logged_in() && current_user_can( 'administrator' );
+
+}
+
+function __cleantheme_mocha_test_page() {
+
+	get_template_part( 'mocha', 'runner' );
+
+}
 
 function cleantheme_setup() {
 	/*

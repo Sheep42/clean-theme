@@ -12,6 +12,8 @@
 	- [Using The Theme](#using-the-theme)
 - [Included Technologies](#included-technologies)
 - [Unit Testing](#unit-testing)
+	- [PHPUnit](#phpunit)
+	- [Mocha](#mocha)
 - [Build System](#build-system)
 	- [Sass](#sass)
 	- [JS](#js)
@@ -140,6 +142,8 @@ The minified slick slider JS is included in this theme. Slick is loaded by defau
 
 # Unit Testing
 
+### PHPUnit
+
 The theme ships with the WP theme unit testing scaffolding in place, as well as a small handful of existing tests for you to reference in building your own. 
 
 The unit test setup script created by WP is not Windows friendly, so if you are going to be using Windows as your main development environment I would recommend using [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to do your phpunit testing.
@@ -161,6 +165,18 @@ The following steps should get you up and running:
 4. Assuming no errors in step 2, run `phpunit` inside of the theme directory. You should see the PHPUnit output after a few seconds.
 
 More information can be found in the [WordPress Developer Documentation](https://developer.wordpress.org/cli/commands/scaffold/theme-tests/).
+
+### Mocha
+
+The [Mocha](https://mochajs.org/) JavaScript testing framework has been included with this theme. 
+
+If you prefer not to use it: run `npm uninstall --save-dev mocha chai`, delete `mocha-runner.php` from the theme root, and remove references to `_cleantheme_register_mocha`, `cleantheme_authenticate_test_user`, and `__cleantheme_mocha_test_page` from functions.php
+
+If you choose to use it: add the line `define( 'ENABLE_MOCHA', true );` to your `wp-config.php`, and save your permalinks. This will enable a virtual page at /mocha/ where I've set up a skeleton testing page. By default, the page sets up mocha using the 'tdd' interface, and loads `assets/js/src/admin/admin.js` and `assets/js/src/theme/main.js`. 
+
+The default tests are located at `assets/js/tests/test-admin.js` and `assets/js/tests/test-theme.js`. Each test file contains a generic example, testing the Array indexOf method, these should be deleted and replaced with your own tests. Testable functions should be defined outside of jQuery closures so they can be found by the test scripts. 
+
+The testing template is `mocha-runner.php` located in the theme root. This can be modified if you need to add new tests, add new source files, or change mocha options.
 
 # Build System
 

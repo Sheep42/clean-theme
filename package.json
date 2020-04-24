@@ -7,23 +7,26 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "browser-sync": "^2.18.13",
+    "chai": "^4.2.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-minify": "^3.1.0",
+    "gulp-mocha": "^7.0.2",
     "gulp-notify": "^3",
     "gulp-plumber": "^1.1.0",
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.1"
+    "gulp-sourcemaps": "^2.6.1",
+    "mocha": "^7.1.1"
   },
   "scripts": {
     "start": "gulp",
     "build": "gulp build --production",
     "build-dev": "gulp build",
     "no-browser-sync": "gulp --no-browser-sync",
-	"replace": "gulp find_and_replace"
+    "replace": "gulp find_and_replace"
   },
   "author": "Dan Shedd"
 }
