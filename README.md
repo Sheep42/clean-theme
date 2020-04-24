@@ -10,6 +10,8 @@
 	- [Minimum Requirements](#requirements)
 	- [Installing](#installing)
 	- [Using The Theme](#using-the-theme)
+	- [Assets](#assets)
+	- [Deployment](#deployment)
 - [Included Technologies](#included-technologies)
 - [Unit Testing](#unit-testing)
 	- [PHPUnit](#phpunit)
@@ -121,6 +123,30 @@ Sass imports are all set up in `assets/css/scss/style.scss`
 Jump to more info on [JS](#js)
 
 Jump to more info on [Sass](#sass)
+
+### Deployment
+
+In general, there are a few parts of this theme you'll want to remove before deployment to a production server. How you manage this is up to you, but any deployment script should generally follow the following steps:
+
+- Exclude all of the following: 
+	- .git/
+	- .gitignore
+	- node_modules/ 
+	- tests/
+	- bin/
+	- .phpcs.xml.dist
+	- phpunit.xml.dist 
+	- .travis.yml
+	- gulpfile.js
+	- mocha-runner.php
+	- package-lock.json
+	- package.json
+	- assets/js/tests/
+	- assets/js/src/
+	- assets/js/build/maps/
+	- assets/css/
+
+- Run npm build to compile production versions of JS and CSS
 
 # Included Technologies
 
