@@ -24,8 +24,8 @@ get_header(); ?>
 			endwhile;
 
 			// the_posts_pagination( array(
-			// 	'prev_text' => cleantheme_get_svg( array( 'icon' => 'arrow-left' ) ) . '<span class="screen-reader-text">' . __( 'Previous page', 'cleantheme' ) . '</span>',
-			// 	'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'cleantheme' ) . '</span>' . cleantheme_get_svg( array( 'icon' => 'arrow-right' ) ),
+			// 	'prev_text' => '&laquo; <span class="screen-reader-text">' . __( 'Previous page', 'cleantheme' ) . '</span>',
+			// 	'next_text' => '<span class="screen-reader-text">' . __( 'Next page', 'cleantheme' ) . '</span> &raquo;',
 			// 	'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'cleantheme' ) . ' </span>',
 			// ) );
 
