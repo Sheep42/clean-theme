@@ -3,7 +3,7 @@
 function cleantheme_init() {
 
 	// Example simple post type registration
-	// cleantheme_register_post_type( 'Book', 'Books', 'book', 5, 'book-listing' );
+	// cleantheme_register_post_type( 'Book', 'Books', 'book', 'book-listing', array( 'supports' => array( 'title', 'editor' ) ) );
 
 	_cleantheme_register_mocha();
 
@@ -115,29 +115,21 @@ add_action( 'after_setup_theme', 'cleantheme_setup' );
  * @param 	string 	$singular 			The singular display name for the post type
  * @param 	string 	$plural 			The plural display name for the post type
  * @param   string 	$slug 	 			The post type slug
- * @param   int 	$menu_position 	 	The menu position for the post type - defaults to 5
  * @param   string 	$rewrite 	 		Override the archive slug for this post type - defaults to $slug
- * @param   bool 	$archive 	 		True / False - Create an archive for this post type
- * @param   bool 	$hierarchical 		True / False - Is this post type hierarchical? (Does it have parent / child relationships)
- * @param 	array 	$supports 			The supports array for this post type - See codex for details
+ * @param   bool 	$args 	 			Additonal register_post_type args
  */
 function cleantheme_register_post_type( 
 	$singular, 
 	$plural, 
-	$slug, 
-	$menu_position = 5, 
-	$rewrite = '', 
-	$archive = true, 
-	$hierarchical = true, 
-	$supports = array( 'title', 'editor', 'thumbnail' ) 
+	$slug,
+	$rewrite = '',
+	$args = array() 
 ) {
 
 	// Bail if missing any of the 3 absolute requirements
 	if( empty( $singular ) || empty( $plural ) || empty( $slug ) ) {
 		return;
 	}
-
-	$rewrite = empty( $rewrite ) ? $slug : $rewrite;
 
 	$labels = array(
         'name'                  => _x( $plural, '', 'cleantheme' ),
@@ -166,23 +158,26 @@ function cleantheme_register_post_type(
         'items_list'            => _x( $plural . ' list', '', 'cleantheme' ),
     );
  
-    $args = array(
+    $args = array_merge( array(
         'labels'             => $labels,
         'public'             => true,
         'publicly_queryable' => true,
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array( 'slug' => ( $rewrite ) ),
         'capability_type'    => 'post',
-        'has_archive'        => $archive,
-        'hierarchical'       => $hierarchical,
-        'menu_position'      => $menu_position,
-        'supports'           => $supports,
-    );
+        'has_archive'        => true,
+		'hierarchical' 		 => true, 
+        'menu_position'      => 5,
+        'supports' => array( 'title', 'editor', 'thumbnail' )
+    ), $args );
+
+    if( !empty( $rewrite ) )
+    	$args['rewrite'] = array( 'slug' => ( $rewrite ) );
  
     register_post_type( $slug, $args );
 }
+
 
 /**
  * 	Register google fonts.
