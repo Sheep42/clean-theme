@@ -8,8 +8,8 @@ This is the theme I use for my own side projects. I've tried to take a minimalis
 convenience functions and libraries that I like to use. The goal of this theme is to provide an easy to understand 
 and easy to use boilerplate theme for any custom WordPress project. 
 Version: 1.0
-License: MIT License (Expat)
-License URI: https://directory.fsf.org/wiki/License:Expat
+License: GPL v3.0
+License URI: https://directory.fsf.org/wiki/License:GPL-3.0
 Text Domain: cleantheme
 */.container{height:100%;width:100%}.screen-reader-text{clip:rect(1px, 1px, 1px, 1px);-webkit-clip-path:polygon(0px 0px, 0px 0px, 0px 0px, 0px 0px);clip-path:polygon(0px 0px, 0px 0px, 0px 0px, 0px 0px);position:absolute !important;white-space:nowrap;height:1px;width:1px;overflow:hidden}.responsive-img-wrapper{display:inline-block;vertical-align:middle}.responsive-img-wrapper img{display:block;height:auto;max-width:100%}.hidden,[hidden]{display:none !important}html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}.cf:before,.cf:after{content:"";display:table}.cf:after{clear:both}.cf{*zoom:1}.clearfix,article,.post,aside{clear:both}body{color:#000;font-family:sans-serif;font-size:16px;line-height:1.5625}strong{font-weight:700}em{font-style:italic}a.button,button,button[type="button"],button[type="submit"],input[type="submit"],input[type="button"]{-webkit-appearance:none}textarea{-webkit-appearance:none}
 
