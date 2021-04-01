@@ -183,7 +183,14 @@ function admin_js() {
 }
 
 function theme_js() { 
-    return build_scripts( [ './assets/js/src/vendor/**/*.js', './assets/js/src/theme/**/*.js' ], 'main', 'theme' );
+    return build_scripts( [ 
+            // './assets/js/src/vendor/slick.min.js', // Include specific vendor files like this 
+            './assets/js/src/vendor/**/*.js', // Comment this line if you need to include vendor files in a specific order
+            './assets/js/src/theme/**/*.js' 
+        ], 
+        'main', 
+        'theme' 
+    );
 }
 
 function find_and_replace() {

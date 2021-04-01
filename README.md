@@ -26,7 +26,7 @@
 # What Isn't This?
 - No pre-defined custom fields! No custom post types! No post formats! No content builders! 100% Freedom to build whatever you need!
 
-- This theme will **not** suit your existing WordPress website with no coding and no custom development, unless you are going for the [Stallman](https://stallman.org/) approach, and even then you'll need to do *some* styling. :)
+- This theme is a starter theme for theme developers and will **not** suit your existing WordPress website without custom development.
 
 - This theme comes with very little markup, the bare minimum in class names (mostly based on WP default themes) and almost no pre-defined styles. This is by design, so you can build on top of the skeleton that exists.
 
