@@ -1,6 +1,6 @@
 const   gulp        = require('gulp'),
         browserSync = require('browser-sync'),
-        sass        = require('gulp-sass'),
+        sass        = require('gulp-sass')(require('node-sass')),
         autoprefixer = require('gulp-autoprefixer'),
         sourcemaps  = require('gulp-sourcemaps'),
         plumber     = require('gulp-plumber'),
